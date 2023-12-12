@@ -1,0 +1,31 @@
+data/
+.idea/
+
+*.pyc 
+*__pycache__*
+
+# file from macos
+.DS_Store
+
+# python file
+wxpusher.py
+
+# folder
+baselines/
+wandb/
+data_sl/
+fig/
+# output files
+nohup.out
+
+analysis_action_plot.py
+analysis_reward_plot.py
+analysis_reward.py
+analysis_crosseval.py
+pretext_test.py
+bash_reward.sh
+bash_test.sh
+
+05_0_kldiv.pdf
+05_1_reward.pdf
+analysis_kl_plot.py
