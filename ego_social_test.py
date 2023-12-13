@@ -33,11 +33,11 @@ def main():
     parser.add_argument('--visualize', type=bool, default=False)
     parser.add_argument('--make_video', type=bool, default=False)
 
-    parser.add_argument('--model_dir', type=str, default='data/original_xiaobai')
+    parser.add_argument('--model_dir', type=str, default='data/rl_liu')
     parser.add_argument('--test_model_ego', type=str, default='Ego_27776.pt')
     parser.add_argument('--test_model_encoder', type=str, default='Encoder_27776.pt')
 
-    parser.add_argument('--model_dir_social', type=str, default='data/20230526_SA2C_-33')
+    parser.add_argument('--model_dir_social', type=str, default='data/rl_social_guide')
     parser.add_argument('--test_model_social', type=str, default='Social_27776.pt')
     parser.add_argument('--social_meta', type=bool, default=True)
     parser.add_argument('--social_idm', type=bool, default=False)                            # for social agent
