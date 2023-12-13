@@ -1,0 +1,3 @@
+[submodule "IS_normalizing_flows"]
+	path = IS_normalizing_flows
+	url = https://github.com/hoergems/rare-event-simulation-normalizing-flows.git
