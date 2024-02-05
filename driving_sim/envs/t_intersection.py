@@ -2,7 +2,7 @@ import random
 import itertools
 import numpy as np
 import copy
-from gym import spaces
+from gymnasium import spaces
 
 from driving_sim.envs.traffic_env import TrafficEnv
 from driving_sim.road import Road, RoadSegment
@@ -65,10 +65,10 @@ class TIntersection(TrafficEnv):
         self.agg_count = 0
         self.collided_veh_id = -999
 
-
     # use the given config to configurate the environment
-    def configure(self, config):
+    def configure(self, config, nenv=1):
         self.config = config
+        self.nenv = nenv
 
         self._road = config.env.road
         self.dt = config.env.dt
@@ -288,7 +288,6 @@ class TIntersection(TrafficEnv):
                 obs['spatial_edges'][int(car._idx - 1), :] = np.append(relative_pos, [0]*self.latent_size)
 
         return obs
-
 
     # define the observation space
     @property

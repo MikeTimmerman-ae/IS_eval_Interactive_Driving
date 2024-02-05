@@ -79,6 +79,8 @@ def main():
     #################################################
     #### 1. Inference network (Ego agent)
     #################################################
+    print("###################### 1. Inference network (Ego agent) ######################")
+
     inference_model = CVAEIntentPredictor(envs.observation_space.spaces, task='pretext_predict', decoder_base='lstm', config=config)
     inference_model.load_state_dict(torch.load('trained_models/pretext/public_ours/checkpoints/995.pt', map_location=device))
     envs.pred_model = inference_model.encoder  # put the encoder network to the environment (for latent inference)
@@ -87,6 +89,8 @@ def main():
     #################################################
     #### 2. RL network (Ego agent)
     #################################################
+    print("###################### 2. RL network (Ego agent) ######################")
+    
     actor_critic = Policy(envs.observation_space.spaces, envs.action_space, base_kwargs=config, base=config.env_config.robot.policy)
     actor_critic.load_state_dict(torch.load('trained_models/rl/con40/public_ours_rl/checkpoints/26800.pt', map_location=device))
     eval_recurrent_hidden_states = {'rnn': torch.zeros(config.training.num_processes, 1, config.network.rnn_hidden_size, device=device)}
@@ -95,6 +99,8 @@ def main():
     #################################################
     #### 3. RL network (Social agent)
     #################################################
+    print("###################### 3. RL network (Social agent) ######################")
+    
     actor_critic_social = SocialPolicy(envs.observation_space.spaces, envs.action_space,
                                        base_kwargs=social_config, base=social_config.env_config.robot.policy)
     agent_social = PPO_Social(actor_critic_social, social_config.ppo.clip_param, social_config.ppo.epoch,
@@ -115,6 +121,7 @@ def main():
     #################################################
     #### 4. Initialization for training
     #################################################
+    print("###################### 4. Initialization for training ######################")
 
     # 4.1 initialize the environment
     obs = envs.reset()
@@ -153,7 +160,8 @@ def main():
     ####   5.4. training RL net (for Social)
     ####   5.5. logging & saving the model
     #################################################
-
+    print("###################### 5. Main training loop start ######################")
+    
     for j in range(num_updates):
 
         # decrease learning rate linearly

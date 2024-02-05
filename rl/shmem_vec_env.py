@@ -8,14 +8,13 @@ from baselines.common.vec_env.vec_env import VecEnv, CloudpickleWrapper, clear_m
 import ctypes
 from baselines import logger
 
-from baselines.common.vec_env.util import dict_to_obs, obs_space_info, obs_to_dict
+from driving_sim.vec_env.util import dict_to_obs, obs_space_info, obs_to_dict
 
 _NP_TO_CT = {np.float32: ctypes.c_float,
              np.int32: ctypes.c_int32,
              np.int8: ctypes.c_int8,
              np.uint8: ctypes.c_char,
-             np.bool: ctypes.c_bool,
-             np.bool_: ctypes.c_bool}
+             bool: ctypes.c_bool}
 
 
 class ShmemVecEnv(VecEnv):

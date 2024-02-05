@@ -38,6 +38,7 @@ def main():
     parser.add_argument('--social_agent', default="..", action='store_true')
     parser.add_argument('--ego_start_baseline', default=False)
     parser.add_argument('--use_pretrained_encoder', default=True)
+    parser.add_argument('--encoder', default="data/encoder_idm/checkpoints/49.pt")
     parser.add_argument('--use_idm', default=True)
     test_args = parser.parse_args()
 

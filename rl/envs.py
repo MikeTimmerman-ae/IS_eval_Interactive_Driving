@@ -1,10 +1,10 @@
 import os
 
-import gym
+import gymnasium
 import numpy as np
 import torch
-from gym.spaces.box import Box
-from gym.spaces.dict import Dict
+from gymnasium.spaces.box import Box
+from gymnasium.spaces.dict import Dict
 
 from baselines import bench
 from baselines.common.atari_wrappers import make_atari, wrap_deepmind
@@ -17,7 +17,7 @@ from baselines.common.vec_env.vec_normalize import \
 from driving_sim.vec_env.vec_pretext_normalize import VecPretextNormalize
 
 try:
-    import dm_control2gym
+    import dm_control2gymnasium
 except ImportError:
     pass
 
@@ -36,21 +36,21 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, config=None, envNu
     def _thunk():
         if env_id.startswith("dm"):
             _, domain, task = env_id.split('.')
-            env = dm_control2gym.make(domain_name=domain, task_name=task)
+            env = dm_control2gymnasium.make(domain_name=domain, task_name=task)
         else:
-            env = gym.make(env_id)
+            env = gymnasium.make(env_id, disable_env_checker=True)
 
-        is_atari = hasattr(gym.envs, 'atari') and isinstance(
-            env.unwrapped, gym.envs.atari.atari_env.AtariEnv)
+        is_atari = hasattr(gymnasium.envs, 'atari') and isinstance(
+            env.unwrapped, gymnasium.envs.atari.atari_env.AtariEnv)
         if is_atari:
             env = make_atari(env_id)
 
-        env.configure(config)
+        env.configure(config, envNum)
 
         envSeed = seed + rank if seed is not None else None
 
         env.thisSeed = envSeed
-        env.nenv = envNum
+        # env.nenv = envNum
         if envNum > 1:
             env.phase = 'train'
         else:
@@ -132,7 +132,7 @@ def make_vec_envs(env_name,
 
 
 # Checks whether done was caused my timit limits or not
-class TimeLimitMask(gym.Wrapper):
+class TimeLimitMask(gymnasium.Wrapper):
     def step(self, action):
         obs, rew, done, info = self.env.step(action)
         if done and self.env._max_episode_steps == self.env._elapsed_steps:
@@ -145,14 +145,14 @@ class TimeLimitMask(gym.Wrapper):
 
 
 # Can be used to test recurrent policies for Reacher-v2
-class MaskGoal(gym.ObservationWrapper):
+class MaskGoal(gymnasium.ObservationWrapper):
     def observation(self, observation):
         if self.env._elapsed_steps > 0:
             observation[-2:] = 0
         return observation
 
 
-class TransposeObs(gym.ObservationWrapper):
+class TransposeObs(gymnasium.ObservationWrapper):
     def __init__(self, env=None):
         """
         Transpose observation space (base class)
@@ -263,7 +263,7 @@ class VecPyTorchFrameStack(VecEnvWrapper):
         self.stacked_obs = torch.zeros((venv.num_envs, ) +
                                        low.shape).to(device)
 
-        observation_space = gym.spaces.Box(
+        observation_space = gymnasium.spaces.Box(
             low=low, high=high, dtype=venv.observation_space.dtype)
         VecEnvWrapper.__init__(self, venv, observation_space=observation_space)
 
