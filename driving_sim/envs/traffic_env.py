@@ -28,7 +28,7 @@ class TrafficEnv(gymnasium.Env):
         self.thisSeed = 0 # will be set in make_env function in envs.py
         self.global_time = None
         self.step_counter = None
-        self.nenv = None # will be set in make_env function in envs.py
+        self.nenv = 12 # will be set in make_env function in envs.py
 
         ########################
         # self.yld_front_gaps = {}
