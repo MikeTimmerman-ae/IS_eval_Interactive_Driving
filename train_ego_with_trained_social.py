@@ -68,6 +68,7 @@ def main():
     torch.manual_seed(config.env_config.env.seed)
     torch.cuda.manual_seed_all(config.env_config.env.seed)
     if config.training.cuda:
+        print('Using CUDA: ', torch.cuda.is_available())
         # torch.cuda.set_device(1)
         if config.training.cuda_deterministic:  # reproducible but slower
             torch.backends.cudnn.benchmark = False
