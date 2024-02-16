@@ -38,7 +38,7 @@ class SocialConfig(object):
     training.log_interval = 20  # log interval, one log per n updates
     training.use_proper_time_limits = False  # compute returns taking into account time limits
     training.cuda_deterministic = False  # sets flags for determinism when using CUDA (potentially slow!)
-    training.no_cuda = True  # disables CUDA training
+    training.no_cuda = False  # disables CUDA training
     training.cuda = not training.no_cuda and torch.cuda.is_available()
     training.num_processes = 12  # how many training CPU processes to use
     training.output_dir = 'data/new_rl'  # the saving directory for train.py
