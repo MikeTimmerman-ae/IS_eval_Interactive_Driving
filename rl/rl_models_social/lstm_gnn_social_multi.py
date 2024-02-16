@@ -92,7 +92,7 @@ class LSTM_GNN_SOCIAL(nn.Module):
             self.RNN = self.RNN.cuda()
             self.actor = self.actor.cuda()
             self.critic = self.critic.cuda()
-            # self.critic_linear = self.critic_linear.cuda()
+            self.critic_linear = self.critic_linear.cuda()
             self.device = 'cuda'
         else:
             self.device = 'cpu'
