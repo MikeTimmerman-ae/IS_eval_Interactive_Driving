@@ -4,7 +4,7 @@ Helpers for dealing with vectorized environments.
 
 from collections import OrderedDict
 
-import gym
+import gymnasium
 import numpy as np
 
 
@@ -27,7 +27,7 @@ def dict_to_obs(obs_dict):
 
 def obs_space_info(obs_space):
     """
-    Get dict-structured information about a gym.Space.
+    Get dict-structured information about a gymnasium.Space.
 
     Returns:
       A tuple (keys, shapes, dtypes):
@@ -35,10 +35,10 @@ def obs_space_info(obs_space):
         shapes: a dict mapping keys to shapes.
         dtypes: a dict mapping keys to dtypes.
     """
-    if isinstance(obs_space, gym.spaces.Dict):
+    if isinstance(obs_space, gymnasium.spaces.Dict):
         assert isinstance(obs_space.spaces, OrderedDict)
         subspaces = obs_space.spaces
-    elif isinstance(obs_space, gym.spaces.Tuple):
+    elif isinstance(obs_space, gymnasium.spaces.Tuple):
         assert isinstance(obs_space.spaces, tuple)
         subspaces = {i: obs_space.spaces[i] for i in range(len(obs_space.spaces))}
     else:

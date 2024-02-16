@@ -1,4 +1,4 @@
-from gym import spaces
+from gymnasium import spaces
 
 from driving_sim.utils.trajectory import *
 from driving_sim.envs.t_intersection import TIntersection

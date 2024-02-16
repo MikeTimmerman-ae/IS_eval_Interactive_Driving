@@ -2,7 +2,7 @@ import random
 import torch
 import pyglet
 import math
-from gym import spaces
+from gymnasium import spaces
 
 from driving_sim.utils.trajectory import *
 from driving_sim.envs.t_intersection_pred_front import TIntersectionPredictFront
@@ -25,9 +25,9 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self.beta_range_min = 1.0
         self.beta_range_max = 1.0
 
-        self.use_idm_social = True
-        self.always_rl_social = False
-        self.always_idm_social = True
+        self.use_idm_social = False
+        self.always_rl_social = True
+        self.always_idm_social = False
 
     def _set_seed(self, seed):
         random.seed(seed)
@@ -53,7 +53,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self._drivers[0].safe_control = self.safe_control
         self.collision_vehicle_type = [0.0, None]
 
-    def configure(self, config):
+    def configure(self, config, nenv=None):
         super(TIntersectionRobustnessSocial, self).configure(config)
 
         self.safe_control = config.car.safe_control
@@ -162,7 +162,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
 
             ###### collision check (1. ego / 2. social / 3. if collision -> return)
             collision_return = False
-            self._collision_social = np.zeros(self.max_veh_num, dtype=np.bool)
+            self._collision_social = np.zeros(self.max_veh_num, dtype=bool)
             self._speed_social = np.zeros(self.max_veh_num)
             self._pos_social = np.zeros(self.max_veh_num)
             self._gap_social = np.zeros(self.max_veh_num)
@@ -215,7 +215,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
                 return
 
             # remove cars that are out-of bound
-            self._reached_goal_social = np.zeros(self.max_veh_num, dtype=np.bool)
+            self._reached_goal_social = np.zeros(self.max_veh_num, dtype=bool)
             for car, driver in zip(self._cars[1:], self._drivers[1:]):
                 if (car.position[1] < 4.) and (car.position[0] < self.left_bound):
                     self._reached_goal_social[int(car._idx - 1)] = True
@@ -435,7 +435,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         return reward_social
 
     def is_social_terminal(self):
-        is_social_terminal = np.zeros(self.max_veh_num, dtype=np.bool)
+        is_social_terminal = np.zeros(self.max_veh_num, dtype=bool)
         for i in range(self.max_veh_num):
             is_social_terminal[i] = self._collision_social[i] or self._reached_goal_social[i]
         return is_social_terminal
