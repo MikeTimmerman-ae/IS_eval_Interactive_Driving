@@ -116,8 +116,8 @@ def main():
     for key_ in ['pretext_actions', 'pretext_infer_masks', 'pretext_masks', 'pretext_nodes',
                  'pretext_spatial_edges', 'pretext_temporal_edges', 'spatial_edges', 'true_labels']:
         rl_ob_space_social.pop(key_)
-    rollouts_social = RolloutStorageSocial(config.ppo.num_steps, config.training.num_processes,
-                                           rl_ob_space_social, envs.action_space, social_config.network.rnn_hidden_size)
+    rollouts_social = RolloutStorageSocial(config.ppo.num_steps, config.training.num_processes, rl_ob_space_social,
+                                           envs.action_space, social_config.network.rnn_hidden_size, device=device)
 
     #################################################
     #### 4. Initialization for training

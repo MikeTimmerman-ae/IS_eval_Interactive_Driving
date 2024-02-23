@@ -17,8 +17,9 @@ and is thrown away after each epoch since PPO is on-policy
 '''
 class RolloutStorageSocial(object):
     def __init__(self, num_steps, num_processes, obs_shape, action_space,
-                 recurrent_hidden_state_size):
+                 recurrent_hidden_state_size, device=0):
 
+        self.device = device
         if isinstance(obs_shape, dict):
             self.obs = {}
             for key in obs_shape:
@@ -123,14 +124,12 @@ class RolloutStorageSocial(object):
         else:
             if use_gae:
                 self.value_preds[-1] = next_value
-                gae = torch.zeros(*self.value_preds.shape[1:])
+                gae = torch.zeros(*self.value_preds.shape[1:], device=self.device)
                 for step in reversed(range(self.rewards.size(0))):
                     delta = self.rewards[step] + \
                             gamma * self.value_preds[step + 1] * self.masks_for_reward[step + 1] \
                             - self.value_preds[step]
-                    print("delta: ", delta.is_cuda)
                     print("gae: ", gae.is_cuda)
-                    print("self.masks_for_reward[step + 1]: ", self.masks_for_reward[step + 1].is_cuda)
                     gae = delta + gamma * gae_lambda * self.masks_for_reward[step + 1] * gae
                     gae = gae * self.bad_masks[step + 1]
                     self.returns[step] = gae + self.value_preds[step]
