@@ -92,7 +92,8 @@ class LSTM_GNN_SOCIAL(nn.Module):
             self.RNN = self.RNN.cuda()
             self.actor = self.actor.cuda()
             self.critic = self.critic.cuda()
-            # self.critic_linear = self.critic_linear.cuda()
+            self.critic_linear = self.critic_linear.cuda()
+            self.edge_model_lower = self.edge_model_lower.cude()
             self.device = 'cuda'
         else:
             self.device = 'cpu'
@@ -133,7 +134,6 @@ class LSTM_GNN_SOCIAL(nn.Module):
 
         # step 1. make the message.
         edge_input = torch.cat((to_vehicle_info, from_vehicle_info), dim=-1)
-        print("edge_input: ", edge_input.is_cuda)
         msg_lower = self.edge_model_lower(edge_input[:, :, :6])
         msg_upper = self.edge_model_upper(edge_input[:, :, 6:])
         msg = torch.cat((msg_lower, msg_upper), dim=2)
