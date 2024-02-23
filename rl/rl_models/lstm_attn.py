@@ -129,7 +129,6 @@ class LSTM_ATTN(nn.Module):
 
         # lstm
         # outputs: x: [seq_length, nenv, 12, 256] h_new: [1, nenv, 12, 256]
-        print("masks", masks.is_cuda)
         x, h_new = self.RNN._forward_gru(rnn_in, hidden_states, masks)
         x = x[:, :, 0, :]  # [seq_length, nenv, 256]
         return x, h_new
