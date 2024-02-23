@@ -170,6 +170,7 @@ class LSTM_GNN_SOCIAL(nn.Module):
 
         hidden_states = reshapeT(rnn_hxs['rnn'], 1, nenv)  # 1, nenv, human_num, 256
         masks = reshapeT(masks, seq_length, nenv)  # seq_length, nenv, human_num
+        print("---!masks: ", masks.is_cuda)
 
         # lstm
         # outputs: x: [seq_length, nenv, 12, 256] h_new: [1, nenv, 12, 256]
