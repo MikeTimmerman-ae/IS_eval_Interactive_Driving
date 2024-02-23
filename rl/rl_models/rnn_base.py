@@ -31,6 +31,8 @@ class RNNBase(nn.Module):
             # [1, 12, 6, ?] -> [1, 12*6, ?] or [30, 6, 6, ?] -> [30, 6*6, ?]
             seq_len, nenv, agent_num, _ = x.size()
             x = x.view(seq_len, nenv*agent_num, -1)
+            print("-hxs", hxs.is_cuda)
+            print("-masks", masks.is_cuda)
             hxs_times_masks = hxs * (masks.view(seq_len, nenv, 1, 1))
             hxs_times_masks = hxs_times_masks.view(seq_len, nenv*agent_num, -1)
             x, hxs = self.gru(x, hxs_times_masks) # we already unsqueezed the inputs in SRNN forward function
