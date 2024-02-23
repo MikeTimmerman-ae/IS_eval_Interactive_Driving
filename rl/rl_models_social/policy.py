@@ -56,7 +56,6 @@ class SocialPolicy(nn.Module):
     def act(self, inputs, rnn_hxs, masks, deterministic=False):
         print("-masks: ", masks.is_cuda)
         if self.meta:
-            print("-!masks: ", masks.is_cuda)
             value, actor_features, rnn_hxs = self.base(inputs, rnn_hxs, masks, infer=True)
             shape_recon = actor_features.shape[:-1]
             dist = self.dist(actor_features.reshape(-1, self.base.output_size))

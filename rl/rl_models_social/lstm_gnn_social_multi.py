@@ -180,6 +180,7 @@ class LSTM_GNN_SOCIAL(nn.Module):
     forward function for rl: returns critic output, actor features, and new rnn hidden state
     '''
     def forward(self, inputs, rnn_hxs, masks, infer=False):
+        print("---masks: ", masks.is_cuda)
         if infer:
             # Test time
             seq_length = 1
