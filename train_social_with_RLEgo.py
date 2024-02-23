@@ -176,7 +176,6 @@ def main():
 
             # 5.1.1. Sample actions (Ego)
             with torch.no_grad():
-                print("eval_masks:", eval_masks.is_cuda)
                 _, action, _, eval_recurrent_hidden_states = \
                     actor_critic.act(obs, eval_recurrent_hidden_states, eval_masks, deterministic=True)
 
