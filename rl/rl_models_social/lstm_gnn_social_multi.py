@@ -92,7 +92,7 @@ class LSTM_GNN_SOCIAL(nn.Module):
             self.RNN = self.RNN.cuda()
             self.actor = self.actor.cuda()
             self.critic = self.critic.cuda()
-            self.critic_linear = self.critic_linear.cuda()
+            # self.critic_linear = self.critic_linear.cuda()
             self.device = 'cuda'
         else:
             self.device = 'cpu'
@@ -115,7 +115,7 @@ class LSTM_GNN_SOCIAL(nn.Module):
         robot_obs_tile = robot_obs.expand([seq_length, nenv, self.human_num, self.robot_state_size])  # seq_length, nenv, human_num, 4
 
         horizontal_vehicle_information = torch.cat((social_car_information,
-                                                    torch.zeros((*social_car_information.size()[:-1], 1),device=self.device),
+                                                    torch.zeros((*social_car_information.size()[:-1], 1), device=self.device),
                                                     objective_weight), dim=-1)
         leftturn_vehicle_information = torch.cat((robot_obs, torch.zeros((*robot_obs.size()[:-1], 2), device=self.device)), dim=-1)
         all_vehicle_information = torch.cat((leftturn_vehicle_information, horizontal_vehicle_information), dim=-2)
@@ -133,6 +133,7 @@ class LSTM_GNN_SOCIAL(nn.Module):
 
         # step 1. make the message.
         edge_input = torch.cat((to_vehicle_info, from_vehicle_info), dim=-1)
+        print(edge_input.get_device())
         msg_lower = self.edge_model_lower(edge_input[:, :, :6])
         msg_upper = self.edge_model_upper(edge_input[:, :, 6:])
         msg = torch.cat((msg_lower, msg_upper), dim=2)

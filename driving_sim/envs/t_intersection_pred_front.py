@@ -94,7 +94,7 @@ class TIntersectionPredictFront(TIntersection):
                 obs['pretext_nodes'][int(car._idx-1), 0] = px * self._drivers[i].x_driver.direction
 
                 # pretext temporal edges
-                obs['pretext_temporal_edges'][int(car._idx-1), 0] = self._cars[i].velocity[0]/self.desire_speed \
+                obs['pretext_temporal_edges'][int(car._idx - 1), 0] = self._cars[i].velocity[0]/self.desire_speed \
                     if normalize else self._cars[i].velocity[0]
                 obs['pretext_temporal_edges'][int(car._idx - 1), 0] = obs['pretext_temporal_edges'][int(car._idx-1), 0]\
                                                                       * self._drivers[i].x_driver.direction
@@ -104,7 +104,7 @@ class TIntersectionPredictFront(TIntersection):
                 if normalize: # normalize to [-1, 1]
                     front_pos = front_pos / self.right_bound
                     front_vel = front_vel / self.desire_speed
-                obs['pretext_spatial_edges'][int(car._idx-1)] = np.array([front_pos, front_vel])* self._drivers[i].x_driver.direction
+                obs['pretext_spatial_edges'][int(car._idx-1)] = np.array([front_pos, front_vel]) * self._drivers[i].x_driver.direction
 
         # fill in masks
         obs['pretext_masks'] = self.car_present

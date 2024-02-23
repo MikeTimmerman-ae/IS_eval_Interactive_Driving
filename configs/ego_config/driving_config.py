@@ -14,8 +14,8 @@ class DrivingConfig(object):
     # baseline with inferred latent states: 'TIntersectionPredictFrontAct-v0'
     # env.env_name = 'TIntersectionRobustness-v0'
     env.env_name = 'TIntersectionRobustnessSocial-v0'
-    env.seed = 50 # random seed
-    env.time_limit = 50 # time limit (for calculate timeouts)
+    env.seed = 50           # random seed
+    env.time_limit = 50     # time limit (for calculate timeouts)
 
     # adjust con_prob to change P(con), note that con_prob != P(con), rough conversions are list below:
     # 0.65, reset=0.2 -> P(con) = 0.2, P(agg) = 0.8
@@ -27,14 +27,13 @@ class DrivingConfig(object):
     env.con_prob = 0.75
 
     env.test_size = 500
-    env.num_updates = 1 # number of simulation steps per RL action step
-    env.dt = 0.1 # RL action period (=1/control frequency)
-    env.v_noise = 0. # noise range for the desired velocity of cars
-    env.vs_actions = [0., 0.5, 3.] # discrete action space for the ego car
-    env.t_actions = [0.]
-    env.desire_speed = 3. # desired speed of the cars
-    # amount of noise on other drivers' actions
-    env.driver_sigma = 0.
+    env.num_updates = 1             # number of simulation steps per RL action step
+    env.dt = 0.1                    # RL action period (=1/control frequency)
+    env.v_noise = 0.                # noise range for the desired velocity of cars
+    env.vs_actions = [0., 0.5, 3.]  # discrete action space for the ego car
+    env.t_actions = [0.]            # desired side-ways deviation of the car from trajectory
+    env.desire_speed = 3.           # desired speed of the cars
+    env.driver_sigma = 0.           # amount of noise on other drivers' actions
     # roads in the T-intersection
     env.road = Road([RoadSegment([(-100., 0.), (100., 0.), (100., 8.), (-100., 8.)]),
                  RoadSegment([(-2, -10.), (2, -10.), (2, 0.), (-2, 0.)])])

@@ -63,6 +63,7 @@ def main():
             torch.backends.cudnn.deterministic = False
     torch.set_num_threads(config.training.num_threads)
     device = torch.device("cuda" if config.training.cuda else "cpu")
+    print('Using device: ', device)
 
     if config.training.render:
         config.training.num_processes = 1

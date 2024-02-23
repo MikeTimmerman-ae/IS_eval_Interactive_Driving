@@ -50,7 +50,7 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, config=None, envNu
         envSeed = seed + rank if seed is not None else None
 
         env.thisSeed = envSeed
-        # env.nenv = envNum
+        env.nenv = envNum
         if envNum > 1:
             env.phase = 'train'
         else:
