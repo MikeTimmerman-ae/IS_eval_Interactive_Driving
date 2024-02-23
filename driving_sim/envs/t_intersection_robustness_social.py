@@ -318,11 +318,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         # theta = random.uniform(-3.0, 3.0)
         # theta = random.randint(-1, 3)
         # theta = random.sample([-1., -0.5,  0.,  0.5,  1.,  1.5,  2.,  2.5,  3.], 1)[0]
-<<<<<<< HEAD
         theta = -1.0
-=======
-        theta = -1
->>>>>>> 8866bd0d4dff7a3048036ef1c13b1827f74250cc
         reward_object = [1.0, theta]
         driver.set_objective(reward_object)
         driver.set_yld(yld)
