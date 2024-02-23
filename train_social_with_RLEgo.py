@@ -222,7 +222,7 @@ def main():
             obs_rl = {}
             for key_ in ['robot_node', 'spatial_edges', 'temporal_edges']:
                 obs_rl[key_] = copy.deepcopy(obs[key_])
-            eval_masks = torch.FloatTensor([[0.0] if done_ else [1.0] for done_ in done], device=device)
+            eval_masks = torch.tensor([[0.0] if done_ else [1.0] for done_ in done], device=device)
 
             # 5.1.8. save the data for RL network (Social agents)
             obs_rl_social = {}
