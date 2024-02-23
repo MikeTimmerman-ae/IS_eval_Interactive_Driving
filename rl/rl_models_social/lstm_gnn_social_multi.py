@@ -133,7 +133,7 @@ class LSTM_GNN_SOCIAL(nn.Module):
 
         # step 1. make the message.
         edge_input = torch.cat((to_vehicle_info, from_vehicle_info), dim=-1)
-        print(edge_input.get_device())
+        print("edge_input: ", edge_input.is_cuda)
         msg_lower = self.edge_model_lower(edge_input[:, :, :6])
         msg_upper = self.edge_model_upper(edge_input[:, :, 6:])
         msg = torch.cat((msg_lower, msg_upper), dim=2)

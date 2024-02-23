@@ -60,9 +60,6 @@ class SocialPolicy(nn.Module):
             shape_recon = actor_features.shape[:-1]
             dist = self.dist(actor_features.reshape(-1, self.base.output_size))
         else:
-            print("Inputs: ", type(inputs))
-            print("rnn_hxs: ", type(rnn_hxs))
-
             value, dist, shape_recon, rnn_hxs = self.base(inputs, rnn_hxs, masks, infer=True)
 
         if deterministic:
