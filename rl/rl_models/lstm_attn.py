@@ -80,7 +80,6 @@ class LSTM_ATTN(nn.Module):
             self.actor = self.actor.cuda()
             self.critic = self.critic.cuda()
             self.critic_linear = self.critic_linear.cuda()
-
         self.train()
 
     '''
