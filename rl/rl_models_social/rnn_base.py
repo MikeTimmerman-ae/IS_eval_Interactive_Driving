@@ -25,7 +25,6 @@ class RNNBase(nn.Module):
     # hxs: [1, nenv, human_num, ?]
     # masks: [seq_len, nenv, 1]
     def _forward_gru(self, x, hxs, masks):
-        print("-----masks: ", masks.is_cuda)
         # for acting model, input shape[0] == hidden state shape[0]
         if x.size(0) == hxs.size(0):
             # use env dimension as batch
