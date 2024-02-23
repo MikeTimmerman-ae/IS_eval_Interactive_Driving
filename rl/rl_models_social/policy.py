@@ -54,7 +54,7 @@ class SocialPolicy(nn.Module):
         raise NotImplementedError
 
     def act(self, inputs, rnn_hxs, masks, deterministic=False):
-        print("-masks: ", masks.masks[step].is_cuda)
+        print("-masks: ", masks.is_cuda)
         if self.meta:
             value, actor_features, rnn_hxs = self.base(inputs, rnn_hxs, masks, infer=True)
             shape_recon = actor_features.shape[:-1]
