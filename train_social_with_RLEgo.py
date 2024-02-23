@@ -188,7 +188,7 @@ def main():
                 rollouts_hidden_s = {}
                 for key in rollouts_social.recurrent_hidden_states:
                     rollouts_hidden_s[key] = rollouts_social.recurrent_hidden_states[key][step]
-                print("masks: ", masks.is_cuda)
+                print("masks: ", rollouts_social.masks[step].is_cuda)
                 value_social, action_social, action_log_prob_social, recurrent_hidden_states_social = \
                     actor_critic_social.act(rollouts_obs, rollouts_hidden_s, rollouts_social.masks[step])
 
