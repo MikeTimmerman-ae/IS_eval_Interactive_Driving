@@ -176,6 +176,7 @@ def main():
 
             # 5.1.1. Sample actions (Ego)
             with torch.no_grad():
+                print("eval_masks:", eval_masks.is_cuda)
                 _, action, _, eval_recurrent_hidden_states = \
                     actor_critic.act(obs, eval_recurrent_hidden_states, eval_masks, deterministic=True)
 
@@ -188,7 +189,6 @@ def main():
                 rollouts_hidden_s = {}
                 for key in rollouts_social.recurrent_hidden_states:
                     rollouts_hidden_s[key] = rollouts_social.recurrent_hidden_states[key][step]
-                print("masks: ", rollouts_social.masks[step].is_cuda)
                 value_social, action_social, action_log_prob_social, recurrent_hidden_states_social = \
                     actor_critic_social.act(rollouts_obs, rollouts_hidden_s, rollouts_social.masks[step])
 

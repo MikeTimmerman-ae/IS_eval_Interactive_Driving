@@ -109,7 +109,6 @@ class LSTM_GNN_SOCIAL(nn.Module):
     returns: output of rnn & new hidden state of rnn
     '''
     def _forward(self, inputs, rnn_hxs, masks, seq_length, nenv):
-        print("----masks: ", masks.is_cuda)
 
         ### important: if you change the _forward, you have to change forward_selective properly !!
 
@@ -181,7 +180,6 @@ class LSTM_GNN_SOCIAL(nn.Module):
     forward function for rl: returns critic output, actor features, and new rnn hidden state
     '''
     def forward(self, inputs, rnn_hxs, masks, infer=False):
-        print("---masks: ", masks.is_cuda)
         if infer:
             # Test time
             seq_length = 1
