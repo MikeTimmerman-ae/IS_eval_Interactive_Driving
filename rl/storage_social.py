@@ -129,7 +129,6 @@ class RolloutStorageSocial(object):
                             gamma * self.value_preds[step + 1] * self.masks_for_reward[step + 1] \
                             - self.value_preds[step]
                     print("delta: ", delta.is_cuda)
-                    print("gae_lambda: ", gae_lambda.is_cuda)
                     print("gae: ", gae.is_cuda)
                     print("self.masks_for_reward[step + 1]: ", self.masks_for_reward[step + 1].is_cuda)
                     gae = delta + gamma * gae_lambda * self.masks_for_reward[step + 1] * gae
