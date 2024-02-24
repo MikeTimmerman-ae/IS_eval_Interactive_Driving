@@ -35,7 +35,7 @@ from driving_sim.utils.info import *
 
 def main():
     parser = argparse.ArgumentParser('Parse configuration file')
-    parser.add_argument('--social_agent', default="data/rl_social_guide", action='store_true')
+    parser.add_argument('--social_agent', default="data/rl_social_guide/checkpoints/Social_27776.pt", action='store_true')
     parser.add_argument('--ego_start_baseline', default=True)
     parser.add_argument('--use_pretrained_encoder', default=True)
     parser.add_argument('--encoder', default="data/encoder_idm/checkpoints/49.pt")
@@ -78,6 +78,7 @@ def main():
 
     torch.set_num_threads(config.training.num_threads)
     device = torch.device("cuda:0" if config.training.cuda else "cpu")
+    print('Using device: ', device)
 
     if config.training.render:
         config.training.num_processes = 1
