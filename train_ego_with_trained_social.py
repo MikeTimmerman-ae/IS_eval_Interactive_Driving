@@ -35,7 +35,7 @@ from driving_sim.utils.info import *
 
 def main():
     parser = argparse.ArgumentParser('Parse configuration file')
-    parser.add_argument('--social_agent', default="data/new_rl/checkpoints/Social_00000.pt", action='store_true')
+    parser.add_argument('--social_agent', default="data/rl_social/checkpoints/Social_00000.pt", action='store_true')
     parser.add_argument('--ego_start_baseline', default=True)
     parser.add_argument('--use_pretrained_encoder', default=True)
     parser.add_argument('--encoder', default="data/encoder_idm/checkpoints/49.pt")
