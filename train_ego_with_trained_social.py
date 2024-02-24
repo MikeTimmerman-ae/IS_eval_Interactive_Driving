@@ -39,7 +39,7 @@ def main():
     parser.add_argument('--ego_start_baseline', default=True)
     parser.add_argument('--use_pretrained_encoder', default=True)
     parser.add_argument('--encoder', default="data/encoder_idm/checkpoints/49.pt")
-    parser.add_argument('--use_idm', default=True)
+    parser.add_argument('--use_idm', default=False)
     test_args = parser.parse_args()
 
     #################################################
