@@ -25,9 +25,9 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self.beta_range_min = 1.0
         self.beta_range_max = 1.0
 
-        self.use_idm_social = False
-        self.always_rl_social = True
-        self.always_idm_social = False
+        self.use_idm_social = True
+        self.always_rl_social = False
+        self.always_idm_social = True
 
     def _set_seed(self, seed):
         random.seed(seed)
@@ -129,7 +129,6 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
             else:
                 if not self.use_idm_social:
                     model_action = action[driver._idx]
-                    print(model_action)
                     rl_action = self.rl_actions[model_action]
                     driver.x_driver.v_des = rl_action[0]
 

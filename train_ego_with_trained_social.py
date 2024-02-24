@@ -248,7 +248,6 @@ def main():
             # 5.1.4. Observe reward and next obs
             prev_obs = copy.deepcopy(obs)
             action_all = torch.cat((action, action_social), dim=-1)
-            print(action_all)
             obs, reward, done, infos = envs.step(action_all)
 
             # 5.1.5. save the data for logging & wandb log for terminated environment
