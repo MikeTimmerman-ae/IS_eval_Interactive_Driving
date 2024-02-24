@@ -35,11 +35,11 @@ from driving_sim.utils.info import *
 
 def main():
     parser = argparse.ArgumentParser('Parse configuration file')
-    parser.add_argument('--social_agent', default="..", action='store_true')
-    parser.add_argument('--ego_start_baseline', default=False)
+    parser.add_argument('--social_agent', default="data/rl_social_guide", action='store_true')
+    parser.add_argument('--ego_start_baseline', default=True)
     parser.add_argument('--use_pretrained_encoder', default=True)
     parser.add_argument('--encoder', default="data/encoder_idm/checkpoints/49.pt")
-    parser.add_argument('--use_idm', default=True)
+    parser.add_argument('--use_idm', default=False)
     test_args = parser.parse_args()
 
     #################################################
@@ -240,7 +240,6 @@ def main():
                 with torch.no_grad():
                     _, action_social, _, recurrent_hidden_states_social = \
                         actor_critic_social.act(obs, recurrent_hidden_states_social, masks_social, deterministic=True)
-
             # 5.1.3. Rendering the environment (if render)
             if config.training.render:
                 envs.render()
