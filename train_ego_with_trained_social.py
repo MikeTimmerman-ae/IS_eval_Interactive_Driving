@@ -95,6 +95,7 @@ def main():
     #################################################
     #### 1. Inference network (Ego agent)
     #################################################
+    print("###################### 1. Inference network (Ego agent) ######################")
 
     # 1.1. make inference network
     inference_model = CVAEIntentPredictor(envs.observation_space.spaces, task='pretext_predict',
@@ -121,6 +122,7 @@ def main():
     #################################################
     #### 2. RL network (Ego agent)
     #################################################
+    print("###################### 1. Inference network (Ego agent) ######################")
 
     # 2.1. create RL policy network
     actor_critic = Policy(envs.observation_space.spaces, envs.action_space,
@@ -150,6 +152,7 @@ def main():
     #################################################
     #### 3. RL network (Social agent)
     #################################################
+    print("###################### 1. Inference network (Ego agent) ######################")
 
     actor_critic_social = SocialPolicy(envs.observation_space.spaces, envs.action_space,
                                        base_kwargs=social_config, base=social_config.env_config.robot.policy, meta=True)
@@ -169,6 +172,7 @@ def main():
     #################################################
     #### 4. Initialization for training
     #################################################
+    print("###################### 1. Inference network (Ego agent) ######################")
 
     # 4.1 initialize the environment
     obs = envs.reset()
@@ -208,6 +212,7 @@ def main():
     ####   5.4. training RL net (for Social)
     ####   5.5. logging & saving the model
     #################################################
+    print("###################### 1. Inference network (Ego agent) ######################")
 
     for j in range(num_updates):
         # decrease learning rate linearly
