@@ -36,7 +36,7 @@ class Config(object):
     training.max_grad_norm = 0.5  # max norm of gradients
     training.num_env_steps = 10e6  # number of environment steps to train: 10e6 for holonomic, 20e6 for unicycle
     training.use_linear_lr_decay = True  # use a linear schedule on the learning rate: True for unicycle, False for holonomic
-    training.save_interval = 2000  # save interval, one save per n updates
+    training.save_interval = 1000  # save interval, one save per n updates
     training.log_interval = 20  # log interval, one log per n updates
     training.use_proper_time_limits = False  # compute returns taking into account time limits
     training.cuda_deterministic = False  # sets flags for determinism when using CUDA (potentially slow!)
