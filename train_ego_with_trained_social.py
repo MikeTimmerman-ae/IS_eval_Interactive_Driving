@@ -158,7 +158,7 @@ def main():
                                        base_kwargs=social_config, base=social_config.env_config.robot.policy, meta=True)
     os.mkdir("data/test/")
     torch.save(actor_critic_social.state_dict(), "data/test/social.pt")
-    actor_critic_social.load_state_dict(torch.load("data/test/social.pt"))
+    actor_critic_social.load_state_dict(torch.load("data/test/social.pt", map_location=device))
     if not test_args.use_idm:
         actor_critic_social.load_state_dict(torch.load(test_args.social_agent, map_location=device))
     nn.DataParallel(actor_critic_social).to(device)
