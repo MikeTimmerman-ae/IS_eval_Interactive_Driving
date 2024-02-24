@@ -129,6 +129,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
             else:
                 if not self.use_idm_social:
                     model_action = action[driver._idx]
+                    print(model_action)
                     rl_action = self.rl_actions[model_action]
                     driver.x_driver.v_des = rl_action[0]
 
