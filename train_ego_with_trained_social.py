@@ -36,7 +36,7 @@ from driving_sim.utils.info import *
 def main():
     parser = argparse.ArgumentParser('Parse configuration file')
     parser.add_argument('--social_agent', default="..", action='store_true')
-    parser.add_argument('--ego_start_baseline', default=False)
+    parser.add_argument('--ego_start_baseline', default=True)
     parser.add_argument('--use_pretrained_encoder', default=True)
     parser.add_argument('--encoder', default="data/encoder_idm/checkpoints/49.pt")
     parser.add_argument('--use_idm', default=True)
@@ -122,7 +122,7 @@ def main():
     #################################################
     #### 2. RL network (Ego agent)
     #################################################
-    print("###################### 1. Inference network (Ego agent) ######################")
+    print("###################### 2. RL network (Ego agent) ######################")
 
     # 2.1. create RL policy network
     actor_critic = Policy(envs.observation_space.spaces, envs.action_space,
@@ -152,7 +152,7 @@ def main():
     #################################################
     #### 3. RL network (Social agent)
     #################################################
-    print("###################### 1. Inference network (Ego agent) ######################")
+    print("###################### 3. RL network (Social agent) ######################")
 
     actor_critic_social = SocialPolicy(envs.observation_space.spaces, envs.action_space,
                                        base_kwargs=social_config, base=social_config.env_config.robot.policy, meta=True)
@@ -172,7 +172,7 @@ def main():
     #################################################
     #### 4. Initialization for training
     #################################################
-    print("###################### 1. Inference network (Ego agent) ######################")
+    print("###################### 4. Initialization for training ######################")
 
     # 4.1 initialize the environment
     obs = envs.reset()
@@ -212,7 +212,7 @@ def main():
     ####   5.4. training RL net (for Social)
     ####   5.5. logging & saving the model
     #################################################
-    print("###################### 1. Inference network (Ego agent) ######################")
+    print("###################### 5. Main training loop start ######################")
 
     for j in range(num_updates):
         # decrease learning rate linearly
