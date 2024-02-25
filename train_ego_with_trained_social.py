@@ -155,7 +155,7 @@ def main():
     print("###################### 3. RL network (Social agent) ######################")
 
     actor_critic_social = SocialPolicy(envs.observation_space.spaces, envs.action_space,
-                                       base_kwargs=social_config, base=social_config.env_config.robot.policy, meta=True)
+                                       base_kwargs=social_config, base=social_config.env_config.robot.policy, meta=False)
     if not test_args.use_idm:
         actor_critic_social.load_state_dict(torch.load("data/test/checkpoints/Social_01000.pt", map_location=device))
     nn.DataParallel(actor_critic_social).to(device)
