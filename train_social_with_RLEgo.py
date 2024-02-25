@@ -108,7 +108,6 @@ def main():
                               social_config.ppo.num_mini_batch, social_config.ppo.value_loss_coef,
                               social_config.ppo.entropy_coef, lr=social_config.training.lr,
                               eps=social_config.training.eps, max_grad_norm=social_config.training.max_grad_norm)
-    torch.save(actor_critic_social.state_dict(), "data/test/checkpoints/Social_01000.pt")
 
     dummy_env = TIntersectionRobustnessSocial()
     dummy_env.configure(config.env_config)

@@ -35,7 +35,7 @@ from driving_sim.utils.info import *
 
 def main():
     parser = argparse.ArgumentParser('Parse configuration file')
-    parser.add_argument('--social_agent', default="data/rl_social/checkpoints/Social_00000.pt", action='store_true')
+    parser.add_argument('--social_agent', default="data/rl_social_guide/checkpoints/Social_27776.pt", action='store_true')
     parser.add_argument('--ego_start_baseline', default=True)
     parser.add_argument('--use_pretrained_encoder', default=True)
     parser.add_argument('--encoder', default="data/encoder_idm/checkpoints/49.pt")
@@ -157,7 +157,7 @@ def main():
     actor_critic_social = SocialPolicy(envs.observation_space.spaces, envs.action_space,
                                        base_kwargs=social_config, base=social_config.env_config.robot.policy, meta=False)
     if not test_args.use_idm:
-        actor_critic_social.load_state_dict(torch.load("data/test/checkpoints/Social_01000.pt", map_location=device))
+        actor_critic_social.load_state_dict(torch.load(test_args.social_agent, map_location=device))
     nn.DataParallel(actor_critic_social).to(device)
     dummy_env = TIntersectionRobustnessSocial()
     dummy_env.configure(config.env_config)
