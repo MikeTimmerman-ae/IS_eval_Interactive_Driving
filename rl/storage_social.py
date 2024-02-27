@@ -17,7 +17,7 @@ and is thrown away after each epoch since PPO is on-policy
 '''
 class RolloutStorageSocial(object):
     def __init__(self, num_steps, num_processes, obs_shape, action_space,
-                 recurrent_hidden_state_size, device=0):
+                 recurrent_hidden_state_size, device='cpu'):
 
         self.device = device
         if isinstance(obs_shape, dict):

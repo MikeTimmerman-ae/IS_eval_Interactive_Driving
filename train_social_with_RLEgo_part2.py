@@ -121,7 +121,7 @@ def main():
                  'pretext_spatial_edges', 'pretext_temporal_edges', 'spatial_edges', 'true_labels']:
         rl_ob_space_social.pop(key_)
     rollouts_social = RolloutStorageSocial(config.ppo.num_steps, config.training.num_processes,
-                                           rl_ob_space_social, envs.action_space, social_config.network.rnn_hidden_size)
+                                           rl_ob_space_social, envs.action_space, social_config.network.rnn_hidden_size, device)
 
     # ppo optimizer
     agent_social = PPO_Social(actor_critic_social, social_config.ppo.clip_param, social_config.ppo.epoch,
