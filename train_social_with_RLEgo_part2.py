@@ -66,6 +66,7 @@ def main():
             torch.backends.cudnn.deterministic = False
     torch.set_num_threads(config.training.num_threads)
     device = torch.device("cuda" if config.training.cuda else "cpu")
+    print('Using device: ', device)
 
     if config.training.render:
         config.training.num_processes = 1
@@ -82,6 +83,7 @@ def main():
     #################################################
     #### 1. Inference network (Ego agent)
     #################################################
+    print("###################### 1. Inference network (Ego agent) ######################")
     inference_model = CVAEIntentPredictor(envs.observation_space.spaces, task='pretext_predict', decoder_base='lstm', config=config)
     inference_model.load_state_dict(torch.load('trained_models/pretext/public_ours/checkpoints/995.pt', map_location=device))
     envs.pred_model = inference_model.encoder
@@ -90,6 +92,7 @@ def main():
     #################################################
     #### 2. RL network (Ego agent)
     #################################################
+    print("###################### 2. RL network (Ego agent) ######################")
     actor_critic = Policy(envs.observation_space.spaces, envs.action_space,
                           base_kwargs=config, base=config.env_config.robot.policy)
     actor_critic.load_state_dict(torch.load('trained_models/rl/con40/public_ours_rl/checkpoints/26800.pt', map_location=device))
@@ -99,7 +102,7 @@ def main():
     #################################################
     #### 3. RL network (Social agent)
     #################################################
-
+    print("###################### 3. RL network (Social agent) ######################")
     actor_critic_social = SocialPolicy(envs.observation_space.spaces, envs.action_space,
                                        base_kwargs=social_config, base=social_config.env_config.robot.policy,
                                        meta=True)
@@ -130,7 +133,7 @@ def main():
     #################################################
     #### 4. Initialization for training
     #################################################
-
+    print("###################### 4. Initialization for training ######################")
     # 4.1 initialize the environment
     obs = envs.reset()
 
@@ -168,6 +171,7 @@ def main():
     ####   5.4. training RL net (for Social)
     ####   5.5. logging & saving the model
     #################################################
+    print("###################### 5. Main training loop start ######################")
 
     for j in range(num_updates):
 
