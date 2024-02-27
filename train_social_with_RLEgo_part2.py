@@ -34,8 +34,8 @@ from configs.social_config.config import SocialConfig
 
 def main():
 
-    use_guide_model = False
-    guide_model_dir = 'data/rl_social_guide/checkpoints/Social_00000.pt'
+    use_guide_model = True
+    guide_model_dir = 'data/rl_social_guide/checkpoints/Social_27776.pt'
 
     #################################################
     #### 0. Configuration & Environment set up

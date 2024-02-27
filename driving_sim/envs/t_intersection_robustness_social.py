@@ -25,8 +25,8 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self.beta_range_min = 1.0
         self.beta_range_max = 1.0
 
-        self.use_idm_social = True
-        self.always_rl_social = False
+        self.use_idm_social = False
+        self.always_rl_social = True
         self.always_idm_social = False
 
     def _set_seed(self, seed):
@@ -315,10 +315,9 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         driver.x_driver.set_direction(direction)
         driver.y_driver.set_p_des(p_des)
 
-        # theta = random.uniform(-3.0, 3.0)
-        theta = random.randint(-1, 4)           # draw uniformly from [-1, 0, 1, 2, 3]
+        theta = random.uniform(-1.0, 3.0)
+        # theta = random.randint(-1, 3)           # draw uniformly from [-1, 0, 1, 2]
         # theta = random.sample([-1., -0.5,  0.,  0.5,  1.,  1.5,  2.,  2.5,  3.], 1)[0]
-        # theta = -1.0
         reward_object = [1.0, theta]
         driver.set_objective(reward_object)
         driver.set_yld(yld)
