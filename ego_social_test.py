@@ -29,11 +29,11 @@ def main():
     #################################################
 
     parser = argparse.ArgumentParser('Parse configuration file')
-    parser.add_argument('--num_eval', type=int, default=100)
+    parser.add_argument('--num_eval', type=int, default=3e6)
     parser.add_argument('--visualize', type=bool, default=False)
     parser.add_argument('--make_video', type=bool, default=False)
 
-    parser.add_argument('--model_dir', type=str, default='data/rl_liu')
+    parser.add_argument('--model_dir', type=str, default='data/rl_ego_normal11')
     parser.add_argument('--test_model_ego', type=str, default='Ego_27776.pt')
     parser.add_argument('--test_model_encoder', type=str, default='Encoder_27776.pt')
 
