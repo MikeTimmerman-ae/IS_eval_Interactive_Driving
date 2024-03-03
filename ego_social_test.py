@@ -85,6 +85,7 @@ def main():
             torch.backends.cudnn.deterministic = False
     torch.set_num_threads(1)
     device = torch.device("cuda" if config.training.cuda else "cpu")
+    print("Device: ", device)
     logging.info('Create other envs with new settings')
 
     # find the checkpoint to be tested
