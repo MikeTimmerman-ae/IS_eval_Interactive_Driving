@@ -29,7 +29,7 @@ def main():
     #################################################
 
     parser = argparse.ArgumentParser('Parse configuration file')
-    parser.add_argument('--num_eval', type=int, default=3e6)
+    parser.add_argument('--num_eval', type=int, default=int(3e6))
     parser.add_argument('--visualize', type=bool, default=False)
     parser.add_argument('--make_video', type=bool, default=False)
 
