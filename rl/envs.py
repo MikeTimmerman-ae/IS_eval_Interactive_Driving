@@ -56,7 +56,7 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, config=None, envNu
         else:
             env.phase = 'test'
 
-        env.seed(seed + rank)
+        env.set_seed(seed + rank)
 
         if str(env.__class__.__name__).find('TimeLimit') >= 0:
             env = TimeLimitMask(env)

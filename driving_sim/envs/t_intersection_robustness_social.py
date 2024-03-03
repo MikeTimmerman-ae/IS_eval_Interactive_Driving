@@ -29,7 +29,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self.always_rl_social = True
         self.always_idm_social = False
 
-    def _set_seed(self, seed):
+    def set_seed(self, seed):
         random.seed(seed)
         np.random.seed(seed)
         torch.manual_seed(seed)

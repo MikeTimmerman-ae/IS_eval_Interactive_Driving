@@ -177,7 +177,7 @@ def main():
 
         # envs.venv.venv.envs[0].seed(eval_idx+1)
         # print(scenarios[eval_idx])
-        envs.venv.venv.envs[0].env._set_seed(eval_idx)
+        envs.venv.venv.envs[0].env.set_seed(eval_idx)
         # envs.venv.venv.envs[0].env._set_seed(scenarios[eval_idx])
 
         # if scenarios[eval_idx] != 129:
