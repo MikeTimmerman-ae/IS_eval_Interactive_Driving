@@ -178,9 +178,6 @@ class LSTM_GNN_SOCIAL(nn.Module):
         critic_output_upper = self.critic_linear_upper(hidden_critic_upper)
         actor_output_upper = self.actor_upper(x[:, :, 6:])
 
-        print('actor_output_upper: ', actor_output_upper.is_cuda)
-        print('actor_output_lower: ', actor_output_lower.is_cuda)
-
         critic_output = torch.cat((critic_output_lower, critic_output_upper), dim=2)
         actor_output = torch.cat((actor_output_lower, actor_output_upper), dim=2)
 
