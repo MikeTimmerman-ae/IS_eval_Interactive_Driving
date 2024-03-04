@@ -218,7 +218,7 @@ def main():
                 obs, reward, done, infos = envs.step(action_all)
                 masks_social = copy.deepcopy(obs['pretext_masks'])
 
-            masks = torch.FloatTensor([[0.0] if done_ else [1.0] for done_ in done])
+            masks = torch.tensor([[0.0] if done_ else [1.0] for done_ in done], dtype=torch.float, device=device)
             env_t += 1
 
             if done[0]:
