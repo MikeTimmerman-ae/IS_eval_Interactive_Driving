@@ -25,8 +25,8 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self.beta_range_min = 1.0
         self.beta_range_max = 1.0
 
-        self.use_idm_social = True
-        self.always_rl_social = False
+        self.use_idm_social = False
+        self.always_rl_social = True
         self.always_idm_social = False
 
     def set_seed(self, seed):
