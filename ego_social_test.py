@@ -29,11 +29,11 @@ def main():
     #################################################
 
     parser = argparse.ArgumentParser('Parse configuration file')
-    parser.add_argument('--num_eval', type=int, default=100)
+    parser.add_argument('--num_eval', type=int, default=int(5e3))
     parser.add_argument('--visualize', type=bool, default=False)
     parser.add_argument('--make_video', type=bool, default=False)
 
-    parser.add_argument('--model_dir', type=str, default='data/rl_liu')
+    parser.add_argument('--model_dir', type=str, default='data/rl_ego_beta32')
     parser.add_argument('--test_model_ego', type=str, default='Ego_27776.pt')
     parser.add_argument('--test_model_encoder', type=str, default='Encoder_27776.pt')
 
@@ -85,6 +85,7 @@ def main():
             torch.backends.cudnn.deterministic = False
     torch.set_num_threads(1)
     device = torch.device("cuda" if config.training.cuda else "cpu")
+    print("Device: ", device)
     logging.info('Create other envs with new settings')
 
     # find the checkpoint to be tested
@@ -177,7 +178,7 @@ def main():
 
         # envs.venv.venv.envs[0].seed(eval_idx+1)
         # print(scenarios[eval_idx])
-        envs.venv.venv.envs[0].env._set_seed(eval_idx)
+        envs.venv.venv.envs[0].env.set_seed(eval_idx)
         # envs.venv.venv.envs[0].env._set_seed(scenarios[eval_idx])
 
         # if scenarios[eval_idx] != 129:
@@ -217,7 +218,7 @@ def main():
                 obs, reward, done, infos = envs.step(action_all)
                 masks_social = copy.deepcopy(obs['pretext_masks'])
 
-            masks = torch.FloatTensor([[0.0] if done_ else [1.0] for done_ in done])
+            masks = torch.tensor([[0.0] if done_ else [1.0] for done_ in done], dtype=torch.float, device=device)
             env_t += 1
 
             if done[0]:

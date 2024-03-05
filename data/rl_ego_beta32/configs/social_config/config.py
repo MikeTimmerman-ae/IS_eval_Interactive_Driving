@@ -9,9 +9,7 @@ class BaseConfig(object):
 '''
 Configuration file for PPO training, pretext trait inference training, pretext data collection, and network architectures for pretext and RL
 '''
-
-class Config(object):
-
+class SocialConfig(object):
     # initialize config file for the driving env
     env_config = DrivingConfig
 
@@ -29,14 +27,14 @@ class Config(object):
 
     # training config for RL
     training = BaseConfig()
-    training.render = False  # render in training or not
-    training.lr = 1e-4  # learning rate
+    training.render = False # render in training or not
+    training.lr = 1e-4 # learning rate
     training.eps = 1e-5  # RMSprop optimizer epsilon
     training.alpha = 0.99  # RMSprop optimizer alpha
     training.max_grad_norm = 0.5  # max norm of gradients
     training.num_env_steps = 10e6  # number of environment steps to train: 10e6 for holonomic, 20e6 for unicycle
     training.use_linear_lr_decay = True  # use a linear schedule on the learning rate: True for unicycle, False for holonomic
-    training.save_interval = 1000  # save interval, one save per n updates
+    training.save_interval = 2000  # save interval, one save per n updates
     training.log_interval = 20  # log interval, one log per n updates
     training.use_proper_time_limits = False  # compute returns taking into account time limits
     training.cuda_deterministic = False  # sets flags for determinism when using CUDA (potentially slow!)
@@ -48,7 +46,11 @@ class Config(object):
     training.load_path = None  # if resume = True, load from the following checkpoint
     training.overwrite = True  # whether to overwrite the output directory in training
     training.num_threads = 1  # number of threads used for intraop parallelism on CPU
+    # if we use intent predictor in training, the path of the predictor model
+    # must match the pretext.method and pretext.cvae_decoder below!
+    training.pretext_model_path = 'trained_models/pretext/public_ours/checkpoints/995.pt'
     training.use_wandb = False
+    training.use_offline = False
 
     # pretext task/trait inference config
     pretext = BaseConfig()
@@ -58,7 +60,7 @@ class Config(object):
 
     # for training ego agent (train_ego.py) => cvae_decoder = 'None'
     # for training social agent (social_train.py) => cvae_decoder = 'Social'
-    pretext.cvae_decoder = 'EgoSocial'
+    pretext.cvae_decoder = 'Social'
     # we are running our method
     if pretext.cvae_decoder == 'lstm':
         pretext.env_name = 'TIntersectionPredictFront-v0'
@@ -67,19 +69,19 @@ class Config(object):
         # ours: 'TIntersectionPredictFront-v0', Morton baseline: 'TIntersectionPredictFrontAct-v0'
         pretext.env_name = 'TIntersectionPredictFrontAct-v0'
     # we are running robustness project. (only ego agent)
-    elif pretext.cvae_decoder == 'Ego':
+    elif pretext.cvae_decoder == 'None':
         pretext.env_name = 'TIntersectionRobustness-v0'
     # we are running robustness project. (only social agent)
     elif pretext.cvae_decoder == 'Social':
         pretext.env_name = 'TIntersectionRobustnessSocial-v0'
     # we are running robustness project. (ego & social agent)
     elif pretext.cvae_decoder == 'EgoSocial':
-        pretext.env_name = 'TIntersectionRobustnessEgoSocial-v0'
+        pretext.env_name = 'TIntersectionRobustnessSocial-v0'
     else:
         raise ValueError("unknown pretext VAE decoder")
 
-    pretext.num_processes = 12  # how many training CPU processes to use
-    pretext.resume_train = False  # whether we resume training from a previous checkpoint
+    pretext.num_processes = 2 # how many training CPU processes to use
+    pretext.resume_train = False # whether we resume training from a previous checkpoint
     pretext.model_load_dir = 'trained_models/pretext/public_ours/checkpoints/995.pt'  # path of the checkpoint we resume from
 
     # for data collection
@@ -91,13 +93,14 @@ class Config(object):
 
     # for VAE training
     # where are we loading the data from
-    pretext.data_load_dir = 'data_sl/data/new_dataset'
-    pretext.lr = 5e-4  # pretext learning rate
-    pretext.epoch_num = 50  # 1000 # number of epochs for pretext task
-    pretext.batch_size = 64  # batch size during training
-    pretext.render = False  # whether we render the pretext env in training or testing
-    pretext.model_save_dir = 'data/new_pretext'  # the directory for saving model
-    pretext.log_interval = 1  # how often do we log the training info
+    pretext.data_load_dir = 'data_sl/data/public_dataset'
+    pretext.lr = 5e-4 # pretext learning rate
+    pretext.epoch_num = 2 # 1000 # number of epochs for pretext task
+    pretext.batch_size = 64 # batch size during training
+    pretext.render = False # whether we render the pretext env in training or testing
+    pretext.model_save_dir = 'data/new_pretext' # the directory for saving model
+    pretext.log_interval = 1 # how often do we log the training info
+
 
     # network architecture config
     network = BaseConfig()

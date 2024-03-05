@@ -13,7 +13,12 @@ class RNNBase(nn.Module):
         super(RNNBase, self).__init__()
         self.config = config
 
-        self.gru = nn.GRU(config.network.embedding_size, config.network.rnn_hidden_size)
+        if config.training.cuda:
+            self.device = 'cuda'
+        else:
+            self.device = 'cpu'
+
+        self.gru = nn.GRU(config.network.embedding_size, config.network.rnn_hidden_size, device=self.device)
 
         for name, param in self.gru.named_parameters():
             if 'bias' in name:
@@ -30,9 +35,9 @@ class RNNBase(nn.Module):
             # use env dimension as batch
             # [1, 12, 6, ?] -> [1, 12*6, ?] or [30, 6, 6, ?] -> [30, 6*6, ?]
             seq_len, nenv, agent_num, _ = x.size()
-            x = x.view(seq_len, nenv*agent_num, -1)
+            x = x.view(seq_len, nenv*agent_num, -1).to(self.device)
             hxs_times_masks = hxs * (masks.view(seq_len, nenv, agent_num, 1))
-            hxs_times_masks = hxs_times_masks.view(seq_len, nenv*agent_num, -1)
+            hxs_times_masks = hxs_times_masks.view(seq_len, nenv*agent_num, -1).to(self.device)
             x, hxs = self.gru(x, hxs_times_masks) # we already unsqueezed the inputs in SRNN forward function
             x = x.view(seq_len, nenv, agent_num, -1)
             hxs = hxs.view(seq_len, nenv, agent_num, -1)

@@ -41,6 +41,9 @@ class SocialPolicy(nn.Module):
         else:
             raise NotImplementedError
 
+        if base_kwargs.training.cuda:
+            self.dist = self.dist.cuda()
+
     @property
     def is_recurrent(self):
         return self.base.is_recurrent

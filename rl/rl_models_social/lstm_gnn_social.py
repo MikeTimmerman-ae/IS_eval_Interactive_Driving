@@ -80,6 +80,13 @@ class LSTM_GNN_SOCIAL(nn.Module):
             self.actor = self.actor.cuda()
             self.critic = self.critic.cuda()
             self.critic_linear = self.critic_linear.cuda()
+            self.actor_upper = self.critic_upper.cuda()
+            self.critic_upper = self.critic_upper.cuda()
+            self.critic_linear_upper = self.critic_linear_upper.cuda()
+            self.edge_model_lower = self.edge_model_lower.cuda()
+            self.edge_model_upper = self.edge_model_upper.cuda()
+            self.node_model_lower = self.node_model_lower.cuda()
+            self.node_model_upper = self.node_model_upper.cuda()
             self.device = 'cuda'
         else:
             self.device = 'cpu'
@@ -94,15 +101,15 @@ class LSTM_GNN_SOCIAL(nn.Module):
         ### important: if you change the _forward, you have to change forward_selective properly !!
 
         # state processing | final shape == seq_length, nenv, human_num, 11
-        social_car_information = reshapeT(inputs['social_car_information'], seq_length, nenv)  # seq_length, nenv, human_num, 3
-        objective_weight = reshapeT(inputs['objective_weight'], seq_length, nenv)  # seq_length, nenv, human_num, 2
-        robot_node = reshapeT(inputs['robot_node'], seq_length, nenv)  # seq_length, nenv, 1, 2
-        temporal_edges = reshapeT(inputs['temporal_edges'], seq_length, nenv)  # seq_length, nenv, 1, 2
-        robot_obs = torch.cat((robot_node, temporal_edges), dim=-1)  # seq_length, nenv, 1, 4
+        social_car_information = reshapeT(inputs['social_car_information'], seq_length, nenv).to(self.device)  # seq_length, nenv, human_num, 3
+        objective_weight = reshapeT(inputs['objective_weight'], seq_length, nenv).to(self.device) # seq_length, nenv, human_num, 2
+        robot_node = reshapeT(inputs['robot_node'], seq_length, nenv).to(self.device)  # seq_length, nenv, 1, 2
+        temporal_edges = reshapeT(inputs['temporal_edges'], seq_length, nenv).to(self.device)  # seq_length, nenv, 1, 2
+        robot_obs = torch.cat((robot_node, temporal_edges), dim=-1).to(self.device)  # seq_length, nenv, 1, 4
         robot_obs_tile = robot_obs.expand([seq_length, nenv, self.human_num, self.robot_state_size])  # seq_length, nenv, human_num, 4
 
         horizontal_vehicle_information = torch.cat((social_car_information,
-                                                    torch.zeros((*social_car_information.size()[:-1], 1),device=self.device),
+                                                    torch.zeros((*social_car_information.size()[:-1], 1), device=self.device),
                                                     objective_weight), dim=-1)
         leftturn_vehicle_information = torch.cat((robot_obs, torch.zeros((*robot_obs.size()[:-1], 2), device=self.device)), dim=-1)
         all_vehicle_information = torch.cat((leftturn_vehicle_information, horizontal_vehicle_information), dim=-2)
