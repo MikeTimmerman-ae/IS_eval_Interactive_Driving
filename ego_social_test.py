@@ -33,7 +33,7 @@ def main():
     parser.add_argument('--visualize', type=bool, default=False)
     parser.add_argument('--make_video', type=bool, default=False)
 
-    parser.add_argument('--model_dir', type=str, default='data/rl_ego_uniform-13')
+    parser.add_argument('--model_dir', type=str, default='data/rl_ego_beta23')
     parser.add_argument('--test_model_ego', type=str, default='Ego_27776.pt')
     parser.add_argument('--test_model_encoder', type=str, default='Encoder_27776.pt')
 
