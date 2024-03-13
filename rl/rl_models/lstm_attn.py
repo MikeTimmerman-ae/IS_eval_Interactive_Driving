@@ -92,6 +92,8 @@ class LSTM_ATTN(nn.Module):
         humans_obs = reshapeT(inputs['spatial_edges'], seq_length, nenv)  # seq_length, nenv, human_num, 3/2
         hidden_states = reshapeT(rnn_hxs['rnn'], 1, nenv)  # 1, nenv, 1, 256
         masks = reshapeT(masks, seq_length, nenv)  # seq_length, nenv, 1
+        print("hidden_states:", hidden_states.is_cuda())
+        print("masks:", masks.is_cuda())
 
         # [seq_length, nenv, 1, 2]+[seq_length, nenv, 1, 2] = [seq_length, nenv, 1, 4]
         robot_obs = torch.cat((robot_node, temporal_edges), dim=-1)
