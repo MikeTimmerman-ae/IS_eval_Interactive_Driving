@@ -49,6 +49,9 @@ class Config(object):
     training.overwrite = True  # whether to overwrite the output directory in training
     training.num_threads = 1  # number of threads used for intraop parallelism on CPU
     training.use_wandb = False
+    # Beta distribution parameters
+    training.mean = 1.5
+    training.std = 0.5
 
     # pretext task/trait inference config
     pretext = BaseConfig()
