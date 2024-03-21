@@ -40,6 +40,11 @@ def main():
     parser.add_argument('--use_pretrained_encoder', default=True)
     parser.add_argument('--encoder', default="data/encoder_idm/checkpoints/49.pt")
     parser.add_argument('--use_idm', default=False)
+    ### Experiment 1
+    parser.add_argument('--mean', default=None)
+    parser.add_argument('--std', default=None)
+    parser.add_argument('--experiment', default=None)
+    ################
     test_args = parser.parse_args()
 
     #################################################
@@ -54,6 +59,13 @@ def main():
     social_config.ppo.num_mini_batch = config.ppo.num_mini_batch
     social_config.ppo.num_steps = config.ppo.num_steps
     social_config.training.cuda = config.training.cuda
+
+    # Set-up experiment 1
+    if test_args.mean is not None and test_args.std is not None:
+        config.mean = test_args.mean
+        config.std = test_args.std
+        config.training.output_dir = f'data/{test_args.experiment}/rl_ego_{config.mean}_{config.std}'
+        print(f"Writing output to {config.training.output_dir}")
 
     # save policy to output_dir
     if os.path.exists(config.training.output_dir) and config.training.overwrite:  # if I want to overwrite the directory

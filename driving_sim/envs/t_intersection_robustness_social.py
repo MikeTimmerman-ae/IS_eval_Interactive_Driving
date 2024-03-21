@@ -25,8 +25,8 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self.beta_range_min = 1.0
         self.beta_range_max = 1.0
 
-        self.use_idm_social = False
-        self.always_rl_social = True
+        self.use_idm_social = True
+        self.always_rl_social = False
         self.always_idm_social = False
 
     def set_seed(self, seed):
@@ -315,7 +315,12 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         driver.x_driver.set_direction(direction)
         driver.y_driver.set_p_des(p_des)
 
-        theta = random.uniform(-1.0, 3.0)
+        if self.config.mean is not None and self.config.std is not None:
+            print(f"Training ego policy on normal distribution with mean {self.config.mean} and standard deviation {self.config.std}")
+            theta = np.random.normal(self.config.mean, self.config.std)
+        else:
+            raise ValueError
+        # theta = random.uniform(-1.0, 3.0)
         # theta = np.random.normal(1.0, 1.0)
         # theta = np.random.beta(3.0, 2.0) * (3 - -1) - 1         # range (-1, 3)
         # theta = np.random.beta(2.0, 3.0) * (3 - -1) - 1         # range (-1, 3)
