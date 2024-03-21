@@ -57,7 +57,9 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         super(TIntersectionRobustnessSocial, self).configure(config)
         self.nenv = nenv
 
-        self.config = config
+        self.mean = config.env.mean
+        self.std = config.env.std
+
         self.safe_control = config.car.safe_control
         self.social_beta_only_collision = config.reward.social_beta_only_collision
         self.social_reward_only_collided = config.reward.social_reward_only_collided
@@ -316,11 +318,9 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         driver.x_driver.set_direction(direction)
         driver.y_driver.set_p_des(p_des)
 
-        print(self.config.env.mean)
-        print(self.config.env.std)
-        if self.config.env.mean is not None and self.config.env.std is not None:
-            print(f"Training ego policy on normal distribution with mean {self.config.env.mean} and standard deviation {self.config.env.std}")
-            theta = np.random.normal(self.config.env.mean, self.config.env.std)
+        if self.mean is not None and self.std is not None:
+            print(f"Training ego policy on normal distribution with mean {self.mean} and standard deviation {self.std}")
+            theta = np.random.normal(self.mean, self.std)
         else:
             raise ValueError
         # theta = random.uniform(-1.0, 3.0)
