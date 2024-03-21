@@ -99,7 +99,7 @@ def make_vec_envs(env_name,
                   num_frame_stack=None,
                   config=None,
                   wrap_pytorch=True):
-    print(config.env_config.env.config)
+    print(config.env_config.env.mean)
     envs = [
         make_env(env_name, seed, i, log_dir, allow_early_resets, config=config.env_config,
                  envNum=num_processes)
