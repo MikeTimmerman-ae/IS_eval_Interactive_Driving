@@ -62,6 +62,7 @@ def main():
 
     # Set-up experiment 1
     if test_args.mean is not None and test_args.std is not None:
+        print(config.env_config.env.mean)
         config.env_config.env.mean = test_args.mean
         config.env_config.env.std = test_args.std
         config.training.output_dir = f'data/{test_args.experiment}/rl_ego_{test_args.mean}_{test_args.std}'
