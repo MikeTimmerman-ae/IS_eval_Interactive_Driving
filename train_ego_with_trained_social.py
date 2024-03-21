@@ -64,7 +64,7 @@ def main():
     if test_args.mean is not None and test_args.std is not None:
         config.env_config.env.mean = test_args.mean
         config.env_config.env.std = test_args.std
-        config.training.output_dir = f'data/{test_args.experiment}/rl_ego_{config.mean}_{config.std}'
+        config.training.output_dir = f'data/{test_args.experiment}/rl_ego_{test_args.mean}_{test_args.std}'
         print(f"Writing output to {config.training.output_dir}")
 
     # save policy to output_dir
