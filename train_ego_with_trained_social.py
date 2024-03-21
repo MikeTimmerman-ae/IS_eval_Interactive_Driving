@@ -62,9 +62,7 @@ def main():
 
     # Set-up experiment 1
     if test_args.mean is not None and test_args.std is not None:
-        print(config.env_config.env.mean)
         config.env_config.env.mean = test_args.mean
-        print(config.env_config.env.mean)
         config.env_config.env.std = test_args.std
         config.training.output_dir = f'data/{test_args.experiment}/rl_ego_{test_args.mean}_{test_args.std}'
         print(f"Writing output to {config.training.output_dir}")
@@ -105,7 +103,7 @@ def main():
     human_num = config.env_config.car.max_veh_num
     envs = make_vec_envs(config.env_config.env.env_name, config.env_config.env.seed, config.training.num_processes,
                          config.env_config.reward.gamma, None, device, False, config=config)
-
+    print(envs.mean)
     #################################################
     #### 1. Inference network (Ego agent)
     #################################################
