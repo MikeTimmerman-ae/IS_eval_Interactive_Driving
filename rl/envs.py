@@ -32,7 +32,7 @@ except ImportError:
     pass
 
 
-def make_env(env_id, seed, rank, log_dir, allow_early_resets, config=None, envNum=1):
+def make_env(env_id, seed, rank, log_dir, allow_early_resets, config=None, envNum=1, mean=None, std=None):
     def _thunk():
         if env_id.startswith("dm"):
             _, domain, task = env_id.split('.')
@@ -44,8 +44,8 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, config=None, envNu
             env.unwrapped, gymnasium.envs.atari.atari_env.AtariEnv)
         if is_atari:
             env = make_atari(env_id)
-        print("in: ", config.training.mean)
-        env.configure(config.env_config, envNum, config.training.mean, config.training.std)
+        print("in: ", mean)
+        env.configure(config.env_config, envNum, mean, std)
 
         envSeed = seed + rank if seed is not None else None
 
@@ -98,11 +98,13 @@ def make_vec_envs(env_name,
                   allow_early_resets,
                   num_frame_stack=None,
                   config=None,
-                  wrap_pytorch=True):
+                  wrap_pytorch=True,
+                  mean=None,
+                  std=None):
     print("out: ", config.training.mean)
     envs = [
         make_env(env_name, seed, i, log_dir, allow_early_resets, config=config,
-                 envNum=num_processes)
+                 envNum=num_processes, mean=mean, std=std)
         for i in range(num_processes)
     ]
 

@@ -102,7 +102,8 @@ def main():
     env_num = config.training.num_processes
     human_num = config.env_config.car.max_veh_num
     envs = make_vec_envs(config.env_config.env.env_name, config.env_config.env.seed, config.training.num_processes,
-                         config.env_config.reward.gamma, None, device, False, config=config)
+                         config.env_config.reward.gamma, None, device, False, config=config,
+                         mean=config.training.mean, std=config.training.std)
 
     #################################################
     #### 1. Inference network (Ego agent)
