@@ -26,8 +26,8 @@ class DrivingConfig(object):
     # 0.88, reset = 0.6 -> P(con) = 0.61, P(agg) = 0.39
     env.con_prob = 0.75
     # Beta distribution parameters
-    env.mean = None
-    env.std = None
+    env.mean = 0.5
+    env.std = 0.5
 
     env.test_size = 500
     env.num_updates = 1             # number of simulation steps per RL action step
