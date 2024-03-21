@@ -29,6 +29,6 @@ for i in "${!normal_mean[@]}"; do
         std="${normal_std[k]}"
 
         ### train ego policy
-        python train_ego_with_trained_social.py --mean $mean --std  $std --experiment=experiment_1
+        /usr/bin/python3 train_ego_with_trained_social.py --mean $mean --std  $std --experiment=experiment_1
     done
 done
