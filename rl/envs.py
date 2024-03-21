@@ -45,8 +45,9 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, config=None, envNu
         if is_atari:
             env = make_atari(env_id)
 
-        print(config.env.mean)
         env.configure(config, envNum)
+        env.mean = config.env.mean
+        env.std = config.env.std
 
         envSeed = seed + rank if seed is not None else None
 
