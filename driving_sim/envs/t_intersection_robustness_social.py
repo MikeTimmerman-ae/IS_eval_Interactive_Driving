@@ -53,12 +53,12 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self._drivers[0].safe_control = self.safe_control
         self.collision_vehicle_type = [0.0, None]
 
-    def configure(self, config, nenv=None):
+    def configure(self, config, nenv=None, mean=None, std=None):
         super(TIntersectionRobustnessSocial, self).configure(config)
         self.nenv = nenv
 
-        self.mean = None
-        self.std = None
+        self.mean = mean
+        self.std = std
 
         self.safe_control = config.car.safe_control
         self.social_beta_only_collision = config.reward.social_beta_only_collision
