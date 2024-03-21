@@ -316,6 +316,8 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         driver.x_driver.set_direction(direction)
         driver.y_driver.set_p_des(p_des)
 
+        print(self.config.env.mean)
+        print(self.config.env.std)
         if self.config.env.mean is not None and self.config.env.std is not None:
             print(f"Training ego policy on normal distribution with mean {self.config.env.mean} and standard deviation {self.config.env.std}")
             theta = np.random.normal(self.config.env.mean, self.config.env.std)
