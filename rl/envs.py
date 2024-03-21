@@ -45,7 +45,7 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, config=None, envNu
         if is_atari:
             env = make_atari(env_id)
         print("in: ", config.env.std)
-        env.configure(config, envNum, config.env.mean, config.env.std)
+        env.configure(config.env_config, envNum, config.env.mean, config.env.std)
 
         envSeed = seed + rank if seed is not None else None
 
@@ -101,7 +101,7 @@ def make_vec_envs(env_name,
                   wrap_pytorch=True):
     print("out: ", config.env_config.env.mean)
     envs = [
-        make_env(env_name, seed, i, log_dir, allow_early_resets, config=config.env_config,
+        make_env(env_name, seed, i, log_dir, allow_early_resets, config=config,
                  envNum=num_processes)
         for i in range(num_processes)
     ]
