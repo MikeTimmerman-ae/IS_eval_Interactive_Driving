@@ -13,7 +13,7 @@ Configuration file for PPO training, pretext trait inference training, pretext d
 class Config(object):
 
     # initialize config file for the driving env
-    env_config = DrivingConfig
+    env_config = DrivingConfig()
 
     # ppo config
     ppo = BaseConfig()
