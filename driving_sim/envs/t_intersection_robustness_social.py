@@ -57,6 +57,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         super(TIntersectionRobustnessSocial, self).configure(config)
         self.nenv = nenv
 
+        print(config.env.mean)
         self.mean = config.env.mean
         self.std = config.env.std
 
