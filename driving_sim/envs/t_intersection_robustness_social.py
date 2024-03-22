@@ -320,7 +320,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
 
         if self.mean is not None and self.std is not None:
             print(f"Training ego policy on normal distribution with mean {self.mean} and standard deviation {self.std}")
-            theta = np.random.normal(self.mean, self.std)
+            theta = np.random.normal(float(self.mean), float(self.std))
         else:
             raise ValueError
         # theta = random.uniform(-1.0, 3.0)
