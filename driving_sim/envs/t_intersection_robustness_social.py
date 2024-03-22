@@ -59,6 +59,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
 
         self.mean = mean
         self.std = std
+        print(f"Social behavior normal distribution with mean {self.mean} and standard deviation {self.std}")
 
         self.safe_control = config.car.safe_control
         self.social_beta_only_collision = config.reward.social_beta_only_collision
@@ -319,7 +320,6 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         driver.y_driver.set_p_des(p_des)
 
         if self.mean is not None and self.std is not None:
-            print(f"Training ego policy on normal distribution with mean {self.mean} and standard deviation {self.std}")
             theta = np.random.normal(float(self.mean), float(self.std))
         else:
             raise ValueError
