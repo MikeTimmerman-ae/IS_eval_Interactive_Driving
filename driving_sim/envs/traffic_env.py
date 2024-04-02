@@ -5,7 +5,7 @@ import gymnasium
 # Abstract environment class, only used for inheritance & does not work alone!
 class TrafficEnv(gymnasium.Env):
     metadata = {
-        'render.modes': ['human', 'rgb_array'],
+        'render_modes': ['human', 'rgb_array'],
     }
 
     def __init__(self):
