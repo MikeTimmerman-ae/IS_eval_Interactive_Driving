@@ -34,7 +34,7 @@ class Config(object):
     training.eps = 1e-5  # RMSprop optimizer epsilon
     training.alpha = 0.99  # RMSprop optimizer alpha
     training.max_grad_norm = 0.5  # max norm of gradients
-    training.num_env_steps = 10e6  # number of environment steps to train: 10e6 for holonomic, 20e6 for unicycle
+    training.num_env_steps = 10e4  # number of environment steps to train: 10e6 for holonomic, 20e6 for unicycle
     training.use_linear_lr_decay = True  # use a linear schedule on the learning rate: True for unicycle, False for holonomic
     training.save_interval = 1000  # save interval, one save per n updates
     training.log_interval = 20  # log interval, one log per n updates
@@ -50,8 +50,8 @@ class Config(object):
     training.num_threads = 1  # number of threads used for intraop parallelism on CPU
     training.use_wandb = False
     # Beta distribution parameters
-    training.mean = 1.5
-    training.std = 0.5
+    training.mean = None
+    training.std = None
 
     # pretext task/trait inference config
     pretext = BaseConfig()

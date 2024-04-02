@@ -6,7 +6,7 @@
 # step 1:
 ###############################################################################
 
-experiment=experiment_1
+experiment=experiment_2
 
 normal_mean=(
     -0.5
@@ -29,6 +29,6 @@ for i in "${!normal_mean[@]}"; do
         std="${normal_std[k]}"
 
         ### train ego policy
-        /usr/bin/python3 train_ego_with_trained_social.py --mean $mean --std  $std --experiment=experiment_1
+        /usr/bin/python3 train_ego_with_trained_social.py --mean $mean --std  $std --experiment=$experiment
     done
 done
