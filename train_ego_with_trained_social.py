@@ -495,4 +495,5 @@ def process_traj(data, save_key_list, nenv, traj_len, human_num):
 
 
 if __name__ == '__main__':
+    print("run")
     main()
