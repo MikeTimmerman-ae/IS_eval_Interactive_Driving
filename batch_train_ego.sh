@@ -3,7 +3,6 @@
 ###############################################################################
 ### README ####################################################################
 # main script for batch training ego policies
-# step 1:
 ###############################################################################
 
 experiment=experiment_2
@@ -29,6 +28,6 @@ for i in "${!normal_mean[@]}"; do
         std="${normal_std[k]}"
 
         ### train ego policy
-        /usr/bin/python3 train_ego_with_trained_social.py --mean $mean --std  $std --experiment=$experiment
+        /usr/bin/python3 train_ego_with_trained_social.py --mean $mean --std  $std --experiment $experiment
     done
 done

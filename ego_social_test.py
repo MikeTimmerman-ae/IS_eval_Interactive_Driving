@@ -41,11 +41,17 @@ def main():
     parser.add_argument('--test_model_social', type=str, default='Social_27776.pt')
     parser.add_argument('--social_meta', type=bool, default=True)
     parser.add_argument('--social_idm', type=bool, default=False)                            # for social agent
-
+    ### Batch evaluation under different evaluation distributions using importance sampling
+    parser.add_argument('--experiment', default=None)
+    parser.add_argument('--mean_naturalistic', default=None)
+    parser.add_argument('--std_naturalistic', default=None)
+    parser.add_argument('--mean_eval', default=None)
+    parser.add_argument('--std_eval', default=None)
+    ################
     test_args = parser.parse_args()
 
     use_idm = test_args.social_idm
-    num_eval = test_args.num_eval
+    num_eval = int(test_args.num_eval)
     visualize = test_args.visualize
     make_video = test_args.make_video
 
@@ -260,7 +266,12 @@ def main():
                     print(f'Social Agent         : {load_path_social}', file=f)
                 print('-----------------------', file=f)
 
-                ###### 6.2. Experimental results (Rates)
+                ###### 6.2. Evaluation distributions
+                print(f'Naturalistic Distribution    : N({len(exp_results["success"])} / {num_eval}) ', file=f)
+                print(f'Evaluation Distribution      : N({len(exp_results["success"])} / {num_eval}) ', file=f)
+                print('-----------------------', file=f)
+
+                ###### 6.3. Experimental results (Rates)
                 print(f'Total        : {num_eval}', file=f)
                 print(f'Success    : {len(exp_results["success"]) / num_eval:.3f} | '
                       f'({len(exp_results["success"])} / {num_eval})', file=f)
@@ -270,7 +281,7 @@ def main():
                       f'({len(exp_results["time_out"])} / {num_eval})', file=f)
                 print('-----------------------', file=f)
 
-                ###### 6.3. Experimental results (Scenario ID)
+                ###### 6.4. Experimental results (Scenario ID)
                 print(f'Success Case    : {exp_results["success"]}', file=f)
                 print(f'Collision Case   : {exp_results["collision"]}', file=f)
                 print(f'Time Out Case  : {exp_results["time_out"]}', file=f)

@@ -40,7 +40,7 @@ def main():
     parser.add_argument('--use_pretrained_encoder', default=True)
     parser.add_argument('--encoder', default="data/encoder_idm/checkpoints/49.pt")
     parser.add_argument('--use_idm', default=False)
-    ### Experiment 1
+    ### Batch training under different normal distributions
     parser.add_argument('--mean', default=None)
     parser.add_argument('--std', default=None)
     parser.add_argument('--experiment', default=None)
