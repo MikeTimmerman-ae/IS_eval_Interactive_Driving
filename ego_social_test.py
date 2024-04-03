@@ -131,7 +131,7 @@ def main():
         config.env_config.env.env_name = 'TIntersectionRobustnessSocial-v0'
     envs = make_vec_envs(config.env_config.env.env_name, config.env_config.env.seed, num_env,
                          config.env_config.reward.gamma, None, device, allow_early_resets=True, config=config,
-                         mean=test_args.mean_eval, std=test_args.mean_std)
+                         mean=test_args.mean_eval, std=test_args.std_eval)
     envs.nenv = num_env
 
     #################################################
