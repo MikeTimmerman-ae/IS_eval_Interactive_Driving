@@ -50,8 +50,6 @@ def main():
     ################
     test_args = parser.parse_args()
 
-    print(f"model directory: {test_args.model_dir}")
-
     use_idm = test_args.social_idm
     num_eval = int(test_args.num_eval)
     visualize = test_args.visualize
