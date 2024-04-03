@@ -55,5 +55,6 @@ for i in "${!normal_mean[@]}"; do
                                                 --std_naturalistic $std_naturalistic \
                                                 --mean_eval $mean_eval \
                                                 --std_eval $std_eval
+        done
     done
 done
