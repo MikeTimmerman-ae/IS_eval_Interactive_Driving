@@ -50,6 +50,7 @@ def main():
     #################################################
     #### 0. Configuration & Environment set up
     #################################################
+    print("###################### 0. Configuration & Environment set up ######################")
 
     # initialize the config instance
     # main configuration is in ego_config
