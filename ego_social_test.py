@@ -10,6 +10,7 @@ import torch.nn as nn
 import numpy as np
 from tqdm import tqdm
 import matplotlib.pyplot as plt
+from scipy.stats import norm
 
 from driving_sim.envs import *
 from driving_sim.utils.info import *
@@ -262,11 +263,21 @@ def main():
                 os.remove(filename)
             filenames = []
 
+    # Calculate failure ratio using importance sampling likelihood ratio correction factor
+    naturalistic_dist = norm(test_args.mean_naturalistic * np.ones(config.env_config.env.car_limit),    # mean
+                             test_args.std_naturalistic * np.ones(config.env_config.env.car_limit))     # std
+    eval_dist = norm(test_args.mean_eval * np.ones(config.env_config.env.car_limit),                    # mean
+                     test_args.std_eval * np.ones(config.env_config.env.car_limit))                     # std
+    c = 0
+    for i in range(num_eval):
+        if i in exp_results['collision'] or i in exp_results['time_out']:
+            c += naturalistic_dist.pdf(exp_results['betas'][i]) / eval_dist.pdf(exp_results['betas'][i])
+    c = c / num_eval
+    print(c)
     #################################################
     #### 6. Logging
     #################################################
     folder_idx = 0
-    print(exp_results['betas'])
     while True:
         eval_results_dir = os.path.join(eval_dir, 'test' + str(folder_idx))
         if not os.path.exists(eval_results_dir):
