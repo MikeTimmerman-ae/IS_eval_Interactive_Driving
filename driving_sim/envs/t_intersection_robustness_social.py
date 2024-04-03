@@ -19,6 +19,7 @@ from driving_sim.utils.info import *
 class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     def __init__(self):
         super(TIntersectionRobustnessSocial, self).__init__()
+        self.total_cars = 0
 
         self.beta_delta = 12 / (10e+6)  # num of environment / timestep
         self.beta_base = self.beta_delta
@@ -281,6 +282,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
 
     # given the pose of a car, initialize a Car & a Driver instance and append them to self._cars & self._drivers
     def add_car(self, x, y, vx, vy, v_des, p_des, direction, theta, yld):
+        self.total_cars += 1
         # P(conservative)
         if yld:
             self.con_count = self.con_count + 1
@@ -397,6 +399,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         info = {}
 
         if self.global_time >= self.time_limit:
+            print("Total number of spawned social cars: ", self.total_cars)
             info['info'] = Timeout()
         elif self._collision:
             info['info'] = Collision()
