@@ -8,7 +8,7 @@
 # 3. Specify evaluation distribution (mu, sigma)
 ###############################################################################
 
-num_eval=5000
+num_eval=100
 experiment=experiment_2
 
 mean_naturalistic=2.0
