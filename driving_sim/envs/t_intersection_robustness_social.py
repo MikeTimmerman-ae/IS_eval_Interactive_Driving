@@ -44,7 +44,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         else:
             self.use_idm_social = [False, True][random.randint(0, 1)]
         super(TIntersectionRobustnessSocial, self)._reset()
-        print(self._cars[1].objective)
+        print(self._drivers[1].objective)
         # self._cars[0].set_velocity(np.array([0.0, 0.0]))
         self.ego_terminal = False
         # self.action_with_idx[int(driver._idx - 1)] = self._actions[i].a_x
