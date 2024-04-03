@@ -8,7 +8,7 @@ from collections import deque
 import wandb
 import torch
 # import torch.nn as nn
-# import numpy as np
+import numpy as np
 # import pandas as pd
 # import torch.optim as optim
 
