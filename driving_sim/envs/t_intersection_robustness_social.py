@@ -399,8 +399,8 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     def get_info(self):
         info = {}
 
+        print("Total number of spawned social cars: ", self.total_cars)
         if self.global_time >= self.time_limit:
-            print("Total number of spawned social cars: ", self.total_cars)
             info['info'] = Timeout()
         elif self._collision:
             info['info'] = Collision()
