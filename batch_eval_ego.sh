@@ -44,8 +44,8 @@ for i in "${!normal_mean[@]}"; do
         std="${normal_std[k]}"
 
         for m in "${!eval_mean[@]}"; do
-            mean_eval = "${eval_mean[k]}"
-            std_eval = "${eval_std[k]}"
+            mean_eval="${eval_mean[k]}"
+            std_eval="${eval_std[k]}"
 
             ### evaluate ego policy
             /usr/bin/python3 ego_social_test.py --num_eval $num_eval \
