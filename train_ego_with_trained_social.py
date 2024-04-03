@@ -19,13 +19,13 @@ from pretext.loss import *  # 1. inference network
 from pretext.pretext_models.cvae_model import CVAEIntentPredictor
 from pretext.data_loader import makeDataset
 
-# from rl.ppo import PPO  # 2. RL network (for ego)
-# from rl.rl_models.policy import Policy
-# from rl.storage import RolloutStorage
-#
-# from rl.ppo import PPO_Social  # 3. RL network (for social)
-# from rl.rl_models_social.policy import SocialPolicy
-# from rl.storage_social import RolloutStorageSocial
+from rl.ppo import PPO  # 2. RL network (for ego)
+from rl.rl_models.policy import Policy
+from rl.storage import RolloutStorage
+
+from rl.ppo import PPO_Social  # 3. RL network (for social)
+from rl.rl_models_social.policy import SocialPolicy
+from rl.storage_social import RolloutStorageSocial
 
 from configs.ego_config.config import Config
 from configs.social_config.config import SocialConfig
