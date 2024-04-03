@@ -306,6 +306,7 @@ def main():
                       f'({len(exp_results["collision"])} / {num_eval})', file=f)
                 print(f'Time Out  : {len(exp_results["time_out"]) / num_eval:.3f} | '
                       f'({len(exp_results["time_out"])} / {num_eval})', file=f)
+                print(f'Failure Rate  : {c}', file=f)
                 print('-----------------------', file=f)
 
                 ###### 6.4. Experimental results (Scenario ID)
