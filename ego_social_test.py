@@ -107,7 +107,11 @@ def main():
         print(f'Social Agent     : {load_path_social}')
     print('-----------------------')
 
-    eval_dir = os.path.join(test_args.model_dir, 'eval')
+    if test_args.experiment is not None:
+        eval_dir = os.path.join(test_args.model_dir, test_args.experiment, 'eval')
+    else:
+        eval_dir = os.path.join(test_args.model_dir, 'eval')
+    print(f'Write evaluation results to: {eval_dir}')
     if not os.path.exists(eval_dir):
         os.mkdir(eval_dir)
 
