@@ -15,10 +15,10 @@ normal_mean=(
 )
 
 normal_std=(
-#    0.5
+    0.5
     0.75
-#    1.0
-#    1.25
+    1.0
+    1.25
 )
 
 for i in "${!normal_mean[@]}"; do
