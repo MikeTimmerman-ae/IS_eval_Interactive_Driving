@@ -399,25 +399,15 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     def get_info(self):
         info = {}
 
+        print(self.objective)
+
         if self.global_time >= self.time_limit:
-            print("Vehicle objectives: ", self.objective)
-            print("Total number of spawned social cars: ", self.total_cars)
-            print("Total number of spawned social cars: ", len(self._cars))
             info['info'] = Timeout()
         elif self._collision:
-            print("Vehicle objectives: ", self.objective)
-            print("Total number of spawned social cars: ", self.total_cars)
-            print("Total number of spawned social cars: ", len(self._cars))
             info['info'] = Collision()
         elif self._outroad:
-            print("Vehicle objectives: ", self.objective)
-            print("Total number of spawned social cars: ", self.total_cars)
-            print("Total number of spawned social cars: ", len(self._cars))
             info['info'] = OutRoad()
         elif self._goal:
-            print("Vehicle objectives: ", self.objective)
-            print("Total number of spawned social cars: ", self.total_cars)
-            print("Total number of spawned social cars: ", len(self._cars))
             info['info'] = ReachGoal()
         else:
             info['info'] = Nothing()
