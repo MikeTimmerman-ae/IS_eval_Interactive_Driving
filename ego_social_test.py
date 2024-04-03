@@ -34,8 +34,8 @@ def main():
     parser.add_argument('--make_video', type=bool, default=False)
 
     parser.add_argument('--model_dir', type=str, default='data/rl_ego_beta23')
-    parser.add_argument('--test_model_ego', type=str, default='Ego_27776.pt')
-    parser.add_argument('--test_model_encoder', type=str, default='Encoder_27776.pt')
+    parser.add_argument('--test_model_ego', type=str, default='Ego_00000.pt')
+    parser.add_argument('--test_model_encoder', type=str, default='Encoder_00000.pt')
 
     parser.add_argument('--model_dir_social', type=str, default='data/rl_social_gmeta')
     parser.add_argument('--test_model_social', type=str, default='Social_27776.pt')
@@ -108,8 +108,8 @@ def main():
         print(f'Social Agent     : {load_path_social}')
     print('-----------------------')
 
-    print(f'Naturalistic Distribution    : N({test_args.mean_naturalistic} / {test_args.std_naturalistic}) ')
-    print(f'Evaluation Distribution      : N({test_args.mean_eval} / {test_args.std_eval}) ')
+    print(f'Naturalistic Distribution    : N({test_args.mean_naturalistic}, {test_args.std_naturalistic}) ')
+    print(f'Evaluation Distribution      : N({test_args.mean_eval}, {test_args.std_eval}) ')
     print('-----------------------')
 
     eval_dir = os.path.join(test_args.model_dir, 'eval')
