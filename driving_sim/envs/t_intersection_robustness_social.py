@@ -399,23 +399,14 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     # get the info
     def get_info(self):
         info = {}
-        # print(self.objective)
-        # print(self.episode_betas)
+
         if self.global_time >= self.time_limit:
-            print("Total number of cars: ", len(self.episode_betas))
-            print("betas: ", self.episode_betas)
             info['info'] = Timeout()
         elif self._collision:
-            print("Total number of cars: ", len(self.episode_betas))
-            print("betas: ", self.episode_betas)
             info['info'] = Collision()
         elif self._outroad:
-            print("Total number of cars: ", len(self.episode_betas))
-            print("betas: ", self.episode_betas)
             info['info'] = OutRoad()
         elif self._goal:
-            print("Total number of cars: ", len(self.episode_betas))
-            print("betas: ", self.episode_betas)
             info['info'] = ReachGoal()
         else:
             info['info'] = Nothing()

@@ -236,10 +236,14 @@ def main():
 
             if done[0]:
                 print(infos[0]['info'])
+
+                # Pad episode betas to a length of 25 samples
                 betas = infos[0]['betas']
-                print(len(betas))
-                print(betas)
-                # exp_results['success'].append(envs.episode_betas)
+                while len(betas) < 25:
+                    betas.append(np.random.normal(float(test_args.mean_eval), float(test_args.std_eval)))
+                exp_results['betas'].append(betas)
+
+                # Log success, failure and time-out
                 if isinstance(infos[0]['info'], ReachGoal):
                     exp_results['success'].append(eval_idx)
                     exp_results['time_to_success'].append(env_t)

@@ -8,7 +8,7 @@
 # 3. Specify evaluation distribution (mu, sigma)
 ###############################################################################
 
-num_eval=5000
+num_eval=50
 experiment=experiment_2
 
 mean_naturalistic=2.0
@@ -24,17 +24,17 @@ eval_std=(
 )
 
 normal_mean=(
-    -0.5
-    0.5
-    1.5
-    2.5
+   -05    # -0.5
+    05    #  0.5
+    15    #  1.5
+    25    #  2.5
 )
 
 normal_std=(
-    0.5
-    0.75
-    1.0
-    1.25
+    05     # 0.5
+    075    # 0.75
+    10     # 1.0
+    125    # 1.25
 )
 
 for m in "${!eval_mean[@]}"; do
