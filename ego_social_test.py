@@ -274,8 +274,8 @@ def main():
                 print('-----------------------', file=f)
 
                 ###### 6.2. Evaluation distributions
-                print(f'Naturalistic Distribution    : N({len(exp_results["success"])} / {num_eval}) ', file=f)
-                print(f'Evaluation Distribution      : N({len(exp_results["success"])} / {num_eval}) ', file=f)
+                print(f'Naturalistic Distribution    : N({test_args.mean_naturalistic}, {test_args.std_naturalistic}) ', file=f)
+                print(f'Evaluation Distribution      : N({test_args.mean_eval}, {test_args.std_eval}) ', file=f)
                 print('-----------------------', file=f)
 
                 ###### 6.3. Experimental results (Rates)
