@@ -264,10 +264,10 @@ def main():
             filenames = []
 
     # Calculate failure ratio using importance sampling likelihood ratio correction factor
-    naturalistic_dist = norm(test_args.mean_naturalistic * np.ones(config.env_config.env.car_limit),    # mean
-                             test_args.std_naturalistic * np.ones(config.env_config.env.car_limit))     # std
-    eval_dist = norm(test_args.mean_eval * np.ones(config.env_config.env.car_limit),                    # mean
-                     test_args.std_eval * np.ones(config.env_config.env.car_limit))                     # std
+    naturalistic_dist = norm(float(test_args.mean_naturalistic) * np.ones(config.env_config.env.car_limit),    # mean
+                             float(test_args.std_naturalistic) * np.ones(config.env_config.env.car_limit))     # std
+    eval_dist = norm(float(test_args.mean_eval) * np.ones(config.env_config.env.car_limit),                    # mean
+                     float(test_args.std_eval) * np.ones(config.env_config.env.car_limit))                     # std
     c = 0
     for i in range(num_eval):
         if i in exp_results['collision'] or i in exp_results['time_out']:
