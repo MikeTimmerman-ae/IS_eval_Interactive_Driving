@@ -420,6 +420,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         else:
             info['info'] = Nothing()
 
+        info['betas'] = self.episode_betas
         info['social_reward'] = self.get_social_reward()
         info['social_done'] = self.is_social_terminal()
         info['collision_vehicle_type'] = self.collision_vehicle_type
