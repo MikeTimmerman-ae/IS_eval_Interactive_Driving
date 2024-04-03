@@ -236,7 +236,7 @@ def main():
 
             if done[0]:
                 print(infos[0]['info'])
-                betas = envs.venv.venv.envs[0].env.env.episode_betas
+                betas = infos[0]['betas']
                 print(len(betas))
                 # exp_results['success'].append(envs.episode_betas)
                 if isinstance(infos[0]['info'], ReachGoal):
