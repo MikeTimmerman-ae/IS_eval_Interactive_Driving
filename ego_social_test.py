@@ -323,6 +323,7 @@ def main():
     print(f'Success   : {len(exp_results["success"]) / num_eval:.3f}')
     print(f'Collision : {len(exp_results["collision"]) / num_eval:.3f}')
     print(f'Time Out  : {len(exp_results["time_out"]) / num_eval:.3f}')
+    print(f'Failure Rate  : {c:.3f}')
     print("---------------------------------------------------")
 
 
