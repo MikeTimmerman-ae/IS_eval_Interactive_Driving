@@ -26,11 +26,11 @@ import argparse
 # from rl.ppo import PPO_Social  # 3. RL network (for social)
 # from rl.rl_models_social.policy import SocialPolicy
 # from rl.storage_social import RolloutStorageSocial
-#
-# from configs.ego_config.config import Config
-# from configs.social_config.config import SocialConfig
-# from driving_sim.envs import *
-# from driving_sim.utils.info import *
+
+from configs.ego_config.config import Config
+from configs.social_config.config import SocialConfig
+from driving_sim.envs import *
+from driving_sim.utils.info import *
 
 
 def main():
