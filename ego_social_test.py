@@ -266,6 +266,7 @@ def main():
     #### 6. Logging
     #################################################
     folder_idx = 0
+    print(exp_results['betas'])
     while True:
         eval_results_dir = os.path.join(eval_dir, 'test' + str(folder_idx))
         if not os.path.exists(eval_results_dir):
