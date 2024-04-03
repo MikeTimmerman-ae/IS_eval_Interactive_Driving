@@ -15,10 +15,10 @@ import torch
 from rl import utils
 from rl.envs import make_vec_envs
 
-# from pretext.loss import *  # 1. inference network
-# from pretext.pretext_models.cvae_model import CVAEIntentPredictor
-# from pretext.data_loader import makeDataset
-#
+from pretext.loss import *  # 1. inference network
+from pretext.pretext_models.cvae_model import CVAEIntentPredictor
+from pretext.data_loader import makeDataset
+
 # from rl.ppo import PPO  # 2. RL network (for ego)
 # from rl.rl_models.policy import Policy
 # from rl.storage import RolloutStorage
