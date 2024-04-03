@@ -62,6 +62,7 @@ def main():
         filenames = []
 
     try:
+        test_args.model_dir = test_args.model_dir.replace('.', '')
         model_dir_string = test_args.model_dir.replace('/', '.') + '.configs.ego_config.config'
         model_arguments = import_module(model_dir_string)
         Config = getattr(model_arguments, 'Config')
