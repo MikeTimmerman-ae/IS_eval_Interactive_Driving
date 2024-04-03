@@ -321,11 +321,11 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         driver.x_driver.set_direction(direction)
         driver.y_driver.set_p_des(p_des)
 
-        if self.mean is not None and self.std is not None:
-            theta = np.random.normal(float(self.mean), float(self.std))
-        else:
-            raise ValueError
-        # theta = random.uniform(-1.0, 3.0)
+        # if self.mean is not None and self.std is not None:
+        #     theta = np.random.normal(float(self.mean), float(self.std))
+        # else:
+        #     raise ValueError
+        theta = random.uniform(-1.0, 3.0)
         # theta = np.random.normal(1.0, 1.0)
         # theta = np.random.beta(3.0, 2.0) * (3 - -1) - 1         # range (-1, 3)
         # theta = np.random.beta(2.0, 3.0) * (3 - -1) - 1         # range (-1, 3)
