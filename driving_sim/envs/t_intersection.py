@@ -100,6 +100,7 @@ class TIntersection(TrafficEnv):
         self.driver_sigma = config.env.driver_sigma
 
         self.time_limit = config.env.time_limit
+        self.car_limit = config.env.car_limit
 
         self.action_with_idx = np.zeros(self.max_veh_num)
 
