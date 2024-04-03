@@ -177,7 +177,7 @@ def main():
     #################################################
     #### 5. Main evaluation loop start
     #################################################
-    exp_results = {key_: [] for key_ in ['success', 'collision', 'time_out', 'time_to_success']}
+    exp_results = {key_: [] for key_ in ['success', 'collision', 'time_out', 'time_to_success', 'betas']}
     envs.venv.venv.envs[0].env.always_rl_social = True
 
     import time
@@ -236,6 +236,9 @@ def main():
 
             if done[0]:
                 print(infos[0]['info'])
+                betas = envs.venv.venv.envs[0].env.env.episode_betas
+                print(len(betas))
+                # exp_results['success'].append(envs.episode_betas)
                 if isinstance(infos[0]['info'], ReachGoal):
                     exp_results['success'].append(eval_idx)
                     exp_results['time_to_success'].append(env_t)
