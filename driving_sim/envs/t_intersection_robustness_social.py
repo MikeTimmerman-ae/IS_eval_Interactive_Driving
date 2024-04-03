@@ -43,6 +43,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
             self.use_idm_social = True
         else:
             self.use_idm_social = [False, True][random.randint(0, 1)]
+        self.episode_betas = []
         super(TIntersectionRobustnessSocial, self)._reset()
         # self._cars[0].set_velocity(np.array([0.0, 0.0]))
         self.ego_terminal = False
@@ -53,7 +54,6 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self.objective = np.zeros((self.max_veh_num, 2))
         self._drivers[0].safe_control = self.safe_control
         self.collision_vehicle_type = [0.0, None]
-        self.episode_betas = []
 
     def configure(self, config, nenv=None, mean=None, std=None):
         super(TIntersectionRobustnessSocial, self).configure(config)
@@ -400,8 +400,8 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     # get the info
     def get_info(self):
         info = {}
-        print(self.objective)
-        print(self.episode_betas)
+        # print(self.objective)
+        # print(self.episode_betas)
         if self.global_time >= self.time_limit:
             print("Total number of cars: ", len(self.episode_betas))
             print("betas: ", self.episode_betas)
