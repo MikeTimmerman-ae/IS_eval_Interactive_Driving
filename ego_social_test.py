@@ -112,10 +112,7 @@ def main():
     print(f'Evaluation Distribution      : N({test_args.mean_eval} / {test_args.std_eval}) ')
     print('-----------------------')
 
-    if test_args.experiment is not None:
-        eval_dir = os.path.join(test_args.model_dir, test_args.experiment, 'eval')
-    else:
-        eval_dir = os.path.join(test_args.model_dir, 'eval')
+    eval_dir = os.path.join(test_args.model_dir, 'eval')
     print(f'Write evaluation results to: {eval_dir}')
     if not os.path.exists(eval_dir):
         os.mkdir(eval_dir)
