@@ -8,7 +8,7 @@
 # 3. Specify evaluation distribution (mu, sigma)
 ###############################################################################
 
-num_eval=100
+num_eval=10
 experiment=experiment_2
 
 mean_naturalistic=2.0
@@ -37,15 +37,15 @@ normal_std=(
     1.25
 )
 
-for i in "${!normal_mean[@]}"; do
-    mean="${normal_mean[i]}"
+for m in "${!eval_mean[@]}"; do
+    mean_eval="${eval_mean[m]}"
+    std_eval="${eval_std[m]}"
 
-    for k in "${!normal_std[@]}"; do
-        std="${normal_std[k]}"
+    for i in "${!normal_mean[@]}"; do
+        mean="${normal_mean[i]}"
 
-        for m in "${!eval_mean[@]}"; do
-            mean_eval="${eval_mean[k]}"
-            std_eval="${eval_std[k]}"
+        for k in "${!normal_std[@]}"; do
+            std="${normal_std[k]}"
 
             ### evaluate ego policy
             /usr/bin/python3 ego_social_test.py --num_eval $num_eval \
