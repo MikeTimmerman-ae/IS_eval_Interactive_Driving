@@ -380,7 +380,6 @@ class TIntersection(TrafficEnv):
                     theta - orientation of car w.r.t. positive x-axis   [float]
                     yld - whether the car yields or not (true label)    [bool]
         """
-        print("USED!!!!")
         # P(conservative) - use counts to estimate probability
         if yld:
             self.con_count = self.con_count + 1

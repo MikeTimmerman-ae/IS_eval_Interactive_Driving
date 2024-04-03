@@ -283,6 +283,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
 
     # given the pose of a car, initialize a Car & a Driver instance and append them to self._cars & self._drivers
     def add_car(self, x, y, vx, vy, v_des, p_des, direction, theta, yld):
+        print("USED!!")
         # P(conservative)
         if yld:
             self.con_count = self.con_count + 1
@@ -399,7 +400,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     # get the info
     def get_info(self):
         info = {}
-
+        print(self.objective)
         if self.global_time >= self.time_limit:
             print("Total number of cars: ", len(self.episode_betas))
             print("betas: ", self.episode_betas)
