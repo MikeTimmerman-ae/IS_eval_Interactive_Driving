@@ -19,7 +19,7 @@ from driving_sim.utils.info import *
 class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     def __init__(self):
         super(TIntersectionRobustnessSocial, self).__init__()
-        self.total_cars = 0
+        self.episode_betas = []
 
         self.beta_delta = 12 / (10e+6)  # num of environment / timestep
         self.beta_base = self.beta_delta
@@ -53,7 +53,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self.objective = np.zeros((self.max_veh_num, 2))
         self._drivers[0].safe_control = self.safe_control
         self.collision_vehicle_type = [0.0, None]
-        self.total_cars = 0
+        self.episode_betas = []
 
     def configure(self, config, nenv=None, mean=None, std=None):
         super(TIntersectionRobustnessSocial, self).configure(config)
@@ -283,7 +283,6 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
 
     # given the pose of a car, initialize a Car & a Driver instance and append them to self._cars & self._drivers
     def add_car(self, x, y, vx, vy, v_des, p_des, direction, theta, yld):
-        self.total_cars += 1
         # P(conservative)
         if yld:
             self.con_count = self.con_count + 1
@@ -333,6 +332,8 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
 
         # theta = random.randint(-1, 3)           # draw uniformly from [-1, 0, 1, 2]
         # theta = random.sample([-1., -0.5,  0.,  0.5,  1.,  1.5,  2.,  2.5,  3.], 1)[0]
+
+        self.episode_betas.append(theta)
         reward_object = [1.0, theta]
         driver.set_objective(reward_object)
         driver.set_yld(yld)
@@ -399,15 +400,21 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     def get_info(self):
         info = {}
 
-        print(self.objective)
-
         if self.global_time >= self.time_limit:
+            print("Total number of cars: ", len(self.episode_betas))
+            print("betas: ", self.episode_betas)
             info['info'] = Timeout()
         elif self._collision:
+            print("Total number of cars: ", len(self.episode_betas))
+            print("betas: ", self.episode_betas)
             info['info'] = Collision()
         elif self._outroad:
+            print("Total number of cars: ", len(self.episode_betas))
+            print("betas: ", self.episode_betas)
             info['info'] = OutRoad()
         elif self._goal:
+            print("Total number of cars: ", len(self.episode_betas))
+            print("betas: ", self.episode_betas)
             info['info'] = ReachGoal()
         else:
             info['info'] = Nothing()
