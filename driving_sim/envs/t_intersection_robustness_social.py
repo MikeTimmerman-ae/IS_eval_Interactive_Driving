@@ -53,6 +53,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self.objective = np.zeros((self.max_veh_num, 2))
         self._drivers[0].safe_control = self.safe_control
         self.collision_vehicle_type = [0.0, None]
+        self.total_cars = 0
 
     def configure(self, config, nenv=None, mean=None, std=None):
         super(TIntersectionRobustnessSocial, self).configure(config)
@@ -400,7 +401,6 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
 
         if self.global_time >= self.time_limit:
             print("Total number of spawned social cars: ", self.total_cars)
-            self.total_cars = 0
             info['info'] = Timeout()
         elif self._collision:
             info['info'] = Collision()
