@@ -108,6 +108,10 @@ def main():
         print(f'Social Agent     : {load_path_social}')
     print('-----------------------')
 
+    print(f'Naturalistic Distribution    : N({test_args.mean_naturalistic} / {test_args.std_naturalistic}) ')
+    print(f'Evaluation Distribution      : N({test_args.mean_eval} / {test_args.std_eval}) ')
+    print('-----------------------')
+
     if test_args.experiment is not None:
         eval_dir = os.path.join(test_args.model_dir, test_args.experiment, 'eval')
     else:
