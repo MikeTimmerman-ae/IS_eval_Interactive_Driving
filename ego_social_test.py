@@ -238,6 +238,7 @@ def main():
                 print(infos[0]['info'])
                 betas = infos[0]['betas']
                 print(len(betas))
+                print(betas)
                 # exp_results['success'].append(envs.episode_betas)
                 if isinstance(infos[0]['info'], ReachGoal):
                     exp_results['success'].append(eval_idx)
