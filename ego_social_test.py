@@ -37,7 +37,7 @@ def main():
     parser.add_argument('--test_model_ego', type=str, default='Ego_27776.pt')
     parser.add_argument('--test_model_encoder', type=str, default='Encoder_27776.pt')
 
-    parser.add_argument('--model_dir_social', type=str, default='data/rl_social_gmeta')
+    parser.add_argument('--model_dir_social', type=str, default='data/rl_social1_gmeta')
     parser.add_argument('--test_model_social', type=str, default='Social_27776.pt')
     parser.add_argument('--social_meta', type=bool, default=True)
     parser.add_argument('--social_idm', type=bool, default=False)                            # for social agent
