@@ -5,7 +5,7 @@
 # main script for batch training ego policies
 ###############################################################################
 
-experiment=experiment_1
+experiment=experiment_2
 
 normal_mean=(
 #    -0.5
