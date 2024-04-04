@@ -16,6 +16,7 @@ class DrivingConfig(object):
     env.env_name = 'TIntersectionRobustnessSocial-v0'
     env.seed = 50           # random seed
     env.time_limit = 50     # time limit (for calculate timeouts)
+    env.car_limit = 50     # car limit (for calculate timeouts)
 
     # adjust con_prob to change P(con), note that con_prob != P(con), rough conversions are list below:
     # 0.65, reset=0.2 -> P(con) = 0.2, P(agg) = 0.8
