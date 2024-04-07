@@ -8,10 +8,10 @@
 experiment=experiment_1
 
 normal_mean=(
-    -0.5
+#    -0.5
     0.5
-    1.5
-    2.5
+#    1.5
+#    2.5
 )
 
 normal_std=(
