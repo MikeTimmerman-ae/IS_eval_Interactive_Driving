@@ -400,8 +400,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     def get_info(self):
         info = {}
 
-        # if self.global_time >= self.time_limit:
-        if len(self.episode_betas) >= self.car_limit:
+        if len(self.episode_betas) >= self.car_limit or self.global_time >= self.time_limit:
             # time-out when limit number of cars has passed
             info['info'] = Timeout()
         elif self._collision:
