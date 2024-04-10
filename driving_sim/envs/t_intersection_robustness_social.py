@@ -74,6 +74,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
             # Generate samples
             print(self.car_limit)
             self.episode_betas = kde.resample(size=self.car_limit)
+            print("Len: ", len(self.episode_betas))
 
         self.safe_control = config.car.safe_control
         self.social_beta_only_collision = config.reward.social_beta_only_collision
