@@ -72,6 +72,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
             # Initialize KDE with bandwidth method 'scott'
             kde = gaussian_kde(data['x'], bw_method='scott', weights=data['density'])
             # Generate samples
+            print(self.car_limit)
             self.episode_betas = kde.resample(size=self.car_limit)
 
         self.safe_control = config.car.safe_control
