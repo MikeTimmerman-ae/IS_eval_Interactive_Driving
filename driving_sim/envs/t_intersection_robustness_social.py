@@ -22,6 +22,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     def __init__(self):
         super(TIntersectionRobustnessSocial, self).__init__()
         self.car_count = 0
+        self.episode_betas = []
 
         self.beta_delta = 12 / (10e+6)  # num of environment / timestep
         self.beta_base = self.beta_delta
@@ -72,10 +73,8 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
             # Initialize KDE with bandwidth method 'scott'
             kde = gaussian_kde(data['x'], bw_method='scott', weights=data['density'])
             # Generate samples
-            print(self.car_limit)
             self.episode_betas = kde.resample(size=self.car_limit)[0]
-            print("Len: ", len(self.episode_betas))
-            print("Episode: ", self.episode_betas)
+            print(self.episode_betas)
 
         self.safe_control = config.car.safe_control
         self.social_beta_only_collision = config.reward.social_beta_only_collision
@@ -412,7 +411,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     def get_info(self):
         info = {}
 
-        if len(self.episode_betas) >= self.car_limit or self.global_time >= self.time_limit:
+        if self.car_count >= self.car_limit or self.global_time >= self.time_limit:
             # time-out when limit number of cars has passed
             info['info'] = Timeout()
         elif self._collision:
