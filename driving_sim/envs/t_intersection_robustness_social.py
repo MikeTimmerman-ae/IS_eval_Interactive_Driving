@@ -344,7 +344,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
 
         # theta = random.randint(-1, 3)           # draw uniformly from [-1, 0, 1, 2]
         # theta = random.sample([-1., -0.5,  0.,  0.5,  1.,  1.5,  2.,  2.5,  3.], 1)[0]
-        print(len(self.episode_betas))
+
         theta = self.episode_betas[self.car_count]
         self.car_count += 1
 
