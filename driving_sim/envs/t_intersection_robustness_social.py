@@ -22,7 +22,6 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     def __init__(self):
         super(TIntersectionRobustnessSocial, self).__init__()
         self.car_count = 0
-        self.episode_betas = []
 
         self.beta_delta = 12 / (10e+6)  # num of environment / timestep
         self.beta_base = self.beta_delta
@@ -46,7 +45,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
             self.use_idm_social = True
         else:
             self.use_idm_social = [False, True][random.randint(0, 1)]
-        self.episode_betas = []
+        self.car_count = 0
         super(TIntersectionRobustnessSocial, self)._reset()
         # self._cars[0].set_velocity(np.array([0.0, 0.0]))
         self.ego_terminal = False
