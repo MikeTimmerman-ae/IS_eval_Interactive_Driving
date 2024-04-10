@@ -109,8 +109,11 @@ def main():
         print(f'Social Agent     : {load_path_social}')
     print('-----------------------')
 
-    print(f'Naturalistic Distribution    : N({test_args.mean_naturalistic}, {test_args.std_naturalistic}) ')
-    print(f'Evaluation Distribution      : N({test_args.mean_eval}, {test_args.std_eval}) ')
+    # print(f'Naturalistic Distribution    : N({test_args.mean_naturalistic}, {test_args.std_naturalistic}) ')
+    if test_args.mean_eval is not None and test_args.std_eval is not None:
+        print(f'Evaluation Distribution      : N({test_args.mean_eval}, {test_args.std_eval}) ')
+    else:
+        print(f'Evaluation Distribution      : Naturalistic Distribution ')
     print('-----------------------')
 
     eval_dir = os.path.join(test_args.model_dir, 'eval')
@@ -264,16 +267,16 @@ def main():
             filenames = []
 
     # Calculate failure ratio using importance sampling likelihood ratio correction factor
-    naturalistic_dist = multivariate_normal(float(test_args.mean_naturalistic) * np.ones(config.env_config.env.car_limit),    # mean
-                     float(test_args.std_naturalistic) * np.diag(np.ones(config.env_config.env.car_limit)))       # std
-    eval_dist = multivariate_normal(float(test_args.mean_eval) * np.ones(config.env_config.env.car_limit),        # mean
-                     float(test_args.std_eval) * np.diag(np.ones(config.env_config.env.car_limit)))               # std
-    c = 0
-    for i in range(num_eval):
-        if i in exp_results['collision'] or i in exp_results['time_out']:
-            c += naturalistic_dist.pdf(exp_results['betas'][i]) / eval_dist.pdf(exp_results['betas'][i])
-    c = c / num_eval
-    print(c)
+    # naturalistic_dist = multivariate_normal(float(test_args.mean_naturalistic) * np.ones(config.env_config.env.car_limit),    # mean
+    #                  float(test_args.std_naturalistic) * np.diag(np.ones(config.env_config.env.car_limit)))       # std
+    # eval_dist = multivariate_normal(float(test_args.mean_eval) * np.ones(config.env_config.env.car_limit),        # mean
+    #                  float(test_args.std_eval) * np.diag(np.ones(config.env_config.env.car_limit)))               # std
+    # c = 0
+    # for i in range(num_eval):
+    #     if i in exp_results['collision'] or i in exp_results['time_out']:
+    #         c += naturalistic_dist.pdf(exp_results['betas'][i]) / eval_dist.pdf(exp_results['betas'][i])
+    # c = c / num_eval
+    # print(c)
     #################################################
     #### 6. Logging
     #################################################
@@ -294,8 +297,10 @@ def main():
                 print('-----------------------', file=f)
 
                 ###### 6.2. Evaluation distributions
-                print(f'Naturalistic Distribution    : N({test_args.mean_naturalistic}, {test_args.std_naturalistic}) ', file=f)
-                print(f'Evaluation Distribution      : N({test_args.mean_eval}, {test_args.std_eval}) ', file=f)
+                if test_args.mean_eval is not None and test_args.std_eval is not None:
+                    print(f'Evaluation Distribution      : N({test_args.mean_eval}, {test_args.std_eval}) ', file=f)
+                else:
+                    print(f'Evaluation Distribution      : Naturalistic Distribution ', file=f)
                 print('-----------------------', file=f)
 
                 ###### 6.3. Experimental results (Rates)
@@ -306,7 +311,7 @@ def main():
                       f'({len(exp_results["collision"])} / {num_eval})', file=f)
                 print(f'Time Out  : {len(exp_results["time_out"]) / num_eval:.3f} | '
                       f'({len(exp_results["time_out"])} / {num_eval})', file=f)
-                print(f'Failure Rate  : {c}', file=f)
+                # print(f'Failure Rate  : {c}', file=f)
                 print('-----------------------', file=f)
 
                 ###### 6.4. Experimental results (Scenario ID)

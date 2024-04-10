@@ -3,6 +3,8 @@ import torch
 import pyglet
 import math
 from gymnasium import spaces
+import json
+from scipy.stats import gaussian_kde, multivariate_normal
 
 from driving_sim.utils.trajectory import *
 from driving_sim.envs.t_intersection_pred_front import TIntersectionPredictFront
@@ -19,15 +21,15 @@ from driving_sim.utils.info import *
 class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     def __init__(self):
         super(TIntersectionRobustnessSocial, self).__init__()
-        self.episode_betas = []
+        self.car_count = 0
 
         self.beta_delta = 12 / (10e+6)  # num of environment / timestep
         self.beta_base = self.beta_delta
         self.beta_range_min = 1.0
         self.beta_range_max = 1.0
 
-        self.use_idm_social = True
-        self.always_rl_social = False
+        self.use_idm_social = False
+        self.always_rl_social = True
         self.always_idm_social = False
 
     def set_seed(self, seed):
@@ -59,9 +61,18 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         super(TIntersectionRobustnessSocial, self).configure(config)
         self.nenv = nenv
 
-        self.mean = mean
-        self.std = std
-        print(f"Social behavior normal distribution with mean {self.mean} and standard deviation {self.std}")
+        if mean is not None and std is not None:
+            print(f"Social behavior normal distribution with mean {mean} and standard deviation {std}.")
+            self.episode_betas = np.random.multivariate_normal([float(mean)], [[float(std)]], config.env_config.env.car_limit)
+        else:
+            print(f"Social behavior using naturalistic distribution.")
+            # Load data from JSON file
+            with open('kde_irl.json', 'r') as file:
+                data = json.load(file)
+            # Initialize KDE with bandwidth method 'scott'
+            kde = gaussian_kde(data['x'], bw_method='scott', weights=data['density'])
+            # Generate samples
+            self.episode_betas = kde.resample(size=self.car_limit)
 
         self.safe_control = config.car.safe_control
         self.social_beta_only_collision = config.reward.social_beta_only_collision
@@ -321,10 +332,6 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         driver.x_driver.set_direction(direction)
         driver.y_driver.set_p_des(p_des)
 
-        if self.mean is not None and self.std is not None:
-            theta = np.random.normal(float(self.mean), float(self.std))
-        else:
-            raise ValueError
         # theta = random.uniform(-1.0, 3.0)
         # theta = np.random.normal(1.0, 1.0)
         # theta = np.random.beta(3.0, 2.0) * (3 - -1) - 1         # range (-1, 3)
@@ -333,7 +340,9 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         # theta = random.randint(-1, 3)           # draw uniformly from [-1, 0, 1, 2]
         # theta = random.sample([-1., -0.5,  0.,  0.5,  1.,  1.5,  2.,  2.5,  3.], 1)[0]
 
-        self.episode_betas.append(theta)
+        theta = self.episode_betas[self.car_count]
+        self.car_count += 1
+
         reward_object = [1.0, theta]
         driver.set_objective(reward_object)
         driver.set_yld(yld)
