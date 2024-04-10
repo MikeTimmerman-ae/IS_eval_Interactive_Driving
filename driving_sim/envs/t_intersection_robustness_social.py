@@ -45,7 +45,23 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
             self.use_idm_social = True
         else:
             self.use_idm_social = [False, True][random.randint(0, 1)]
+
+        # Generate new set of beta's
         self.car_count = 0
+        if self.mean is not None and self.std is not None:
+            print(f"Social behavior normal distribution with mean {self.mean} and standard deviation {self.std}.")
+            self.episode_betas = np.random.multivariate_normal([float(self.mean)], [[float(self.std)]], self.car_limit)
+        else:
+            print(f"Social behavior using naturalistic distribution.")
+            # Load data from JSON file
+            with open('beta_dist/kde_irl.json', 'r') as file:
+                data = json.load(file)
+            # Initialize KDE with bandwidth method 'scott'
+            kde = gaussian_kde(data['x'], bw_method='scott', weights=data['density'])
+            # Generate samples
+            self.episode_betas = kde.resample(size=self.car_limit)[0]
+            print(self.episode_betas)
+
         super(TIntersectionRobustnessSocial, self)._reset()
         # self._cars[0].set_velocity(np.array([0.0, 0.0]))
         self.ego_terminal = False
@@ -60,20 +76,8 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
     def configure(self, config, nenv=None, mean=None, std=None):
         super(TIntersectionRobustnessSocial, self).configure(config)
         self.nenv = nenv
-
-        if mean is not None and std is not None:
-            print(f"Social behavior normal distribution with mean {mean} and standard deviation {std}.")
-            self.episode_betas = np.random.multivariate_normal([float(mean)], [[float(std)]], config.env_config.env.car_limit)
-        else:
-            print(f"Social behavior using naturalistic distribution.")
-            # Load data from JSON file
-            with open('beta_dist/kde_irl.json', 'r') as file:
-                data = json.load(file)
-            # Initialize KDE with bandwidth method 'scott'
-            kde = gaussian_kde(data['x'], bw_method='scott', weights=data['density'])
-            # Generate samples
-            self.episode_betas = kde.resample(size=self.car_limit)[0]
-            print(self.episode_betas)
+        self.mean = mean
+        self.std = std
 
         self.safe_control = config.car.safe_control
         self.social_beta_only_collision = config.reward.social_beta_only_collision
