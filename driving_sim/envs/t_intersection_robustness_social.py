@@ -73,7 +73,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
             kde = gaussian_kde(data['x'], bw_method='scott', weights=data['density'])
             # Generate samples
             print(self.car_limit)
-            self.episode_betas = kde.resample(size=self.car_limit)
+            self.episode_betas = kde.resample(size=self.car_limit)[0]
             print("Len: ", len(self.episode_betas))
             print("Episode: ", self.episode_betas)
 
