@@ -67,7 +67,7 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         else:
             print(f"Social behavior using naturalistic distribution.")
             # Load data from JSON file
-            with open('/beta_dist/kde_irl.json', 'r') as file:
+            with open('../../beta_dist/kde_irl.json', 'r') as file:
                 data = json.load(file)
             # Initialize KDE with bandwidth method 'scott'
             kde = gaussian_kde(data['x'], bw_method='scott', weights=data['density'])
