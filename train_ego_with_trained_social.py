@@ -69,7 +69,7 @@ def main():
         config.training.output_dir = save_path
         print(f"Writing output to {config.training.output_dir}")
     elif test_args.experiment is not None:
-        save_path = f'data/{test_args.experiment}/{config.training.output_dir}'
+        save_path = f'data/{test_args.experiment}'
         config.training.output_dir = save_path
         print(f"Writing output to {config.training.output_dir}")
 
