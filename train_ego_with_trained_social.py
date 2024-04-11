@@ -68,6 +68,10 @@ def main():
         save_path = f'data/{test_args.experiment}/rl_ego_{test_args.mean.replace(".","")}_{test_args.std.replace(".","")}'
         config.training.output_dir = save_path
         print(f"Writing output to {config.training.output_dir}")
+    elif test_args.experiment is not None:
+        save_path = f'data/{test_args.experiment}/{config.training.output_dir}'
+        config.training.output_dir = save_path
+        print(f"Writing output to {config.training.output_dir}")
 
     # save policy to output_dir
     if os.path.exists(config.training.output_dir) and config.training.overwrite:  # if I want to overwrite the directory
