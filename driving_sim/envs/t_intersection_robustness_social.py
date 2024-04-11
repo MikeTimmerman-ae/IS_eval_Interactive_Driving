@@ -49,10 +49,8 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         # Generate new set of beta's
         self.car_count = 0
         if self.mean is not None and self.std is not None:
-            print(f"Social behavior normal distribution with mean {self.mean} and standard deviation {self.std}.")
             self.episode_betas = np.random.multivariate_normal([float(self.mean)], [[float(self.std)]], self.car_limit)
         else:
-            print(f"Social behavior using naturalistic distribution.")
             # Load data from JSON file
             with open('beta_dist/kde_irl.json', 'r') as file:
                 data = json.load(file)
