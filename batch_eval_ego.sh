@@ -11,17 +11,8 @@
 num_eval=5000
 experiment=experiment_1
 
-mean_naturalistic=2.0
-std_naturalistic=0.5
-
-eval_mean=(
-    2.0
-    0.0
-)
-eval_std=(
-    0.5
-    0.5
-)
+eval_mean=1.5
+eval_std=0.5
 
 normal_mean=(
    -0.5
@@ -31,10 +22,9 @@ normal_mean=(
 )
 
 normal_std=(
-#    0.5
+    0.5
     0.75
-#    1.0
-#    1.25
+    1.0
 )
 
 for m in "${!eval_mean[@]}"; do
@@ -50,9 +40,6 @@ for m in "${!eval_mean[@]}"; do
             ### evaluate ego policy
             /usr/bin/python3 ego_social_test.py --num_eval $num_eval \
                                                 --model_dir "data/${experiment}/rl_ego_${mean}_${std}" \
-                                                --experiment $experiment \
-                                                --mean_naturalistic $mean_naturalistic \
-                                                --std_naturalistic $std_naturalistic \
                                                 --mean_eval $mean_eval \
                                                 --std_eval $std_eval
         done

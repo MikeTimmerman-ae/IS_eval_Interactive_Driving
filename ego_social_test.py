@@ -4,6 +4,7 @@ import copy
 import logging
 import argparse
 from importlib import import_module
+import pandas as pd
 
 import torch
 import torch.nn as nn
@@ -30,11 +31,11 @@ def main():
     #################################################
 
     parser = argparse.ArgumentParser('Parse configuration file')
-    parser.add_argument('--num_eval', type=int, default=int(5e3))
+    parser.add_argument('--num_eval', type=int, default=int(3))
     parser.add_argument('--visualize', type=bool, default=False)
     parser.add_argument('--make_video', type=bool, default=False)
 
-    parser.add_argument('--model_dir', type=str, default='data/rl_ego_uniform-13')
+    parser.add_argument('--model_dir', type=str, default='data/experiment_1/rl_ego_-05_05')
     parser.add_argument('--test_model_ego', type=str, default='Ego_27776.pt')
     parser.add_argument('--test_model_encoder', type=str, default='Encoder_27776.pt')
 
@@ -43,9 +44,6 @@ def main():
     parser.add_argument('--social_meta', type=bool, default=True)
     parser.add_argument('--social_idm', type=bool, default=False)                            # for social agent
     ### Batch evaluation under different evaluation distributions using importance sampling
-    parser.add_argument('--experiment', default=None)
-    parser.add_argument('--mean_naturalistic', default=None)
-    parser.add_argument('--std_naturalistic', default=None)
     parser.add_argument('--mean_eval', default=None)
     parser.add_argument('--std_eval', default=None)
     ################
@@ -108,6 +106,9 @@ def main():
         load_path_social = os.path.join(test_args.model_dir_social, 'checkpoints', test_args.test_model_social)
         print(f'Social Agent     : {load_path_social}')
     print('-----------------------')
+
+    test_args.mean_eval = 1.5
+    test_args.std_eval = 0.5
 
     # print(f'Naturalistic Distribution    : N({test_args.mean_naturalistic}, {test_args.std_naturalistic}) ')
     if test_args.mean_eval is not None and test_args.std_eval is not None:
@@ -241,11 +242,8 @@ def main():
             if done[0]:
                 print(infos[0]['info'])
 
-                # Pad episode betas to a length of 25 samples
-                betas = infos[0]['betas']
-                while len(betas) < 25:
-                    betas.append(np.random.normal(float(test_args.mean_eval), float(test_args.std_eval)))
-                exp_results['betas'].append(betas)
+                # Save beta parameters of current episode
+                exp_results['betas'].append(infos[0]['betas'])
 
                 # Log success, failure and time-out
                 if isinstance(infos[0]['info'], ReachGoal):
@@ -274,6 +272,8 @@ def main():
         eval_results_dir = os.path.join(eval_dir, 'test' + str(folder_idx))
         if not os.path.exists(eval_results_dir):
             os.mkdir(eval_results_dir)
+            np.savetxt(os.path.join(eval_results_dir, 'betas.csv'), np.array(exp_results['betas']))
+            np.savetxt(os.path.join(eval_results_dir, 'successes.csv'), np.array(exp_results['success']))
             with open(os.path.join(eval_results_dir, 'results.txt'), 'w') as f:
 
                 ###### 6.1. Model directory
