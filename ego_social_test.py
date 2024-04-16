@@ -266,17 +266,6 @@ def main():
                 os.remove(filename)
             filenames = []
 
-    # Calculate failure ratio using importance sampling likelihood ratio correction factor
-    # naturalistic_dist = multivariate_normal(float(test_args.mean_naturalistic) * np.ones(config.env_config.env.car_limit),    # mean
-    #                  float(test_args.std_naturalistic) * np.diag(np.ones(config.env_config.env.car_limit)))       # std
-    # eval_dist = multivariate_normal(float(test_args.mean_eval) * np.ones(config.env_config.env.car_limit),        # mean
-    #                  float(test_args.std_eval) * np.diag(np.ones(config.env_config.env.car_limit)))               # std
-    # c = 0
-    # for i in range(num_eval):
-    #     if i in exp_results['collision'] or i in exp_results['time_out']:
-    #         c += naturalistic_dist.pdf(exp_results['betas'][i]) / eval_dist.pdf(exp_results['betas'][i])
-    # c = c / num_eval
-    # print(c)
     #################################################
     #### 6. Logging
     #################################################
@@ -311,7 +300,6 @@ def main():
                       f'({len(exp_results["collision"])} / {num_eval})', file=f)
                 print(f'Time Out  : {len(exp_results["time_out"]) / num_eval:.3f} | '
                       f'({len(exp_results["time_out"])} / {num_eval})', file=f)
-                # print(f'Failure Rate  : {c}', file=f)
                 print('-----------------------', file=f)
 
                 ###### 6.4. Experimental results (Scenario ID)
@@ -328,7 +316,6 @@ def main():
     print(f'Success   : {len(exp_results["success"]) / num_eval:.3f}')
     print(f'Collision : {len(exp_results["collision"]) / num_eval:.3f}')
     print(f'Time Out  : {len(exp_results["time_out"]) / num_eval:.3f}')
-    # print(f'Failure Rate  : {c:.3f}')
     print("---------------------------------------------------")
 
 
