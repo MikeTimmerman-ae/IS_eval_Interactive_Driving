@@ -182,7 +182,7 @@ def main():
     #################################################
     #### 5. Main evaluation loop start
     #################################################
-    exp_results = {key_: [] for key_ in ['success', 'collision', 'time_out', 'time_to_success', 'betas']}
+    exp_results = {key_: [] for key_ in ['success', 'collision', 'time_out', 'time_to_success', 'betas', 'num_cars']}
     envs.venv.venv.envs[0].env.always_rl_social = True
 
     import time
