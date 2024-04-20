@@ -244,6 +244,7 @@ def main():
 
                 # Save beta parameters of current episode
                 exp_results['betas'].append(infos[0]['betas'])
+                exp_results['num_cars'].append(infos[0]['num_cars'])
 
                 # Log success, failure and time-out
                 if isinstance(infos[0]['info'], ReachGoal):
@@ -274,6 +275,7 @@ def main():
             os.mkdir(eval_results_dir)
             np.savetxt(os.path.join(eval_results_dir, 'betas.csv'), np.array(exp_results['betas']))
             np.savetxt(os.path.join(eval_results_dir, 'successes.csv'), np.array(exp_results['success']))
+            np.savetxt(os.path.join(eval_results_dir, 'num_cars.csv'), np.array(exp_results['num_cars']))
             with open(os.path.join(eval_results_dir, 'results.txt'), 'w') as f:
 
                 ###### 6.1. Model directory
