@@ -57,8 +57,8 @@ for k in "${!normal_std[@]}"; do
 
         # Perform naturalistic evaluation of specified policies
         if $naturalistic_eval; then
-            for m in "${!$naturalistic_dist[@]}"; do
-                dist="${$naturalistic_dist[m]}"
+            for m in "${!naturalistic_dist[@]}"; do
+                  dist="${naturalistic_dist[m]}"
 
                   ### evaluate ego policy
                   /usr/bin/python3 ego_social_test.py --num_eval $num_eval \
