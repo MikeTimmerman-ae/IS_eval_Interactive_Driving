@@ -64,7 +64,7 @@ for k in "${!normal_std[@]}"; do
                   /usr/bin/python3 ego_social_test.py --num_eval $num_eval \
                                                       --model_dir "data/${experiment}/rl_ego_${mean}_${std}" \
                                                       --eval_type "naturalistic" \
-                                                      --naturalistic_dist dist
+                                                      --naturalistic_dist $dist
             done
         fi
 
