@@ -112,7 +112,7 @@ def main():
     if test_args.eval_type == "IS":
         print(f'Evaluation Distribution      : N({test_args.mean_eval}, {test_args.std_eval}) ')
     elif test_args.eval_type == "naturalistic":
-        print(f'Evaluation Distribution      : Naturalistic Distribution  {test_args.naturalistic_dist}')
+        print(f'Evaluation Distribution      : Naturalistic Distribution {test_args.naturalistic_dist}')
     print('-----------------------')
 
     eval_dir = os.path.join(test_args.model_dir, 'eval')
