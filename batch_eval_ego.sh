@@ -8,7 +8,7 @@
 # 3. Specify evaluation distribution (mu, sigma)
 ###############################################################################
 
-num_eval=10
+num_eval=5000
 experiment=experiment_1
 naturalistic_eval=true        # True in case of naturalistic eval
 IS_eval=true                 # True in case of importance sampling eval
