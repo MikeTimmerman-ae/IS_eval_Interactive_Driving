@@ -2,7 +2,7 @@ Ego Agent            : data/experiment_1/rl_ego_25_10/checkpoints/Ego_27776.pt
 Ego Agent Encoder: data/experiment_1/rl_ego_25_10/checkpoints/Encoder_27776.pt
 Social Agent         : data/rl_social_gmeta/checkpoints/Social_27776.pt
 -----------------------
-Evaluation Distribution      : Naturalistic Distribution 
+Evaluation Distribution      : Naturalistic Distribution kde_irl
 -----------------------
 Total        : 5000
 Success    : 0.672 | (3362 / 5000)
