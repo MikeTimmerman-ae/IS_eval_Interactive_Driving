@@ -15,7 +15,7 @@ IS_eval=true                 # True in case of importance sampling eval
 
 ########## Specify in case of naturalistic evaluation #########
 naturalistic_dist=(
-#    kde_irl
+    kde_irl
     kde_InD1
 #    kde_InD2
 )
@@ -62,7 +62,8 @@ for k in "${!normal_std[@]}"; do
 
                   ### evaluate ego policy
                   /usr/bin/python3 ego_social_test.py --num_eval $num_eval \
-                                                      --model_dir "data/${experiment}/rl_ego_${mean}_${std}" \
+#                                                      --model_dir "data/${experiment}/rl_ego_${mean}_${std}" \
+                                                      --model_dir "data/${experiment}/rl_ego_normal-13" \
                                                       --eval_type "naturalistic" \
                                                       --naturalistic_dist $dist
             done
