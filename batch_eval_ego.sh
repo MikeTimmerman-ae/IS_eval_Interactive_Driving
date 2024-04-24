@@ -62,10 +62,10 @@ for k in "${!normal_std[@]}"; do
 
                   ### evaluate ego policy
                   /usr/bin/python3 ego_social_test.py --num_eval $num_eval \
-#                                                      --model_dir "data/${experiment}/rl_ego_${mean}_${std}" \
                                                       --model_dir "data/${experiment}/rl_ego_normal-13" \
                                                       --eval_type "naturalistic" \
                                                       --naturalistic_dist $dist
+#                                                      --model_dir "data/${experiment}/rl_ego_${mean}_${std}" \
             done
         fi
 
