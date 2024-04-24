@@ -50,9 +50,9 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self.car_count = 0
         if self.mean is not None and self.std is not None:
             self.episode_betas = np.random.normal(float(self.mean), float(self.std), self.car_limit)
-        else:
+        elif self.nat_dist is not None:
             # Load data from JSON file
-            with open('beta_dist/kde_irl.json', 'r') as file:
+            with open(f'beta_dist/{self.nat_dist}.json', 'r') as file:
                 data = json.load(file)
             # Initialize KDE with bandwidth method 'scott'
             kde = gaussian_kde(data['x'], bw_method='scott', weights=data['density'])
@@ -70,16 +70,17 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self._drivers[0].safe_control = self.safe_control
         self.collision_vehicle_type = [0.0, None]
 
-    def configure(self, config, nenv=None, mean=None, std=None):
+    def configure(self, config, nenv=None, mean=None, std=None, nat=None):
         super(TIntersectionRobustnessSocial, self).configure(config)
         self.nenv = nenv
         self.mean = mean
         self.std = std
+        self.nat_dist = nat
 
         if self.mean is not None and self.std is not None:
             print(f"Social behavior normal distribution with mean {self.mean} and standard deviation {self.std}.")
-        else:
-            print(f"Social behavior using naturalistic distribution.")
+        elif self.nat_dist is not None:
+            print(f"Social behavior using naturalistic distribution {self.nat_dist}.")
 
         self.safe_control = config.car.safe_control
         self.social_beta_only_collision = config.reward.social_beta_only_collision

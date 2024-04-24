@@ -35,7 +35,7 @@ def main():
     parser.add_argument('--visualize', type=bool, default=False)
     parser.add_argument('--make_video', type=bool, default=False)
 
-    parser.add_argument('--model_dir', type=str, default='data/experiment_1/rl_ego_-05_05')
+    parser.add_argument('--model_dir', type=str, default='data/experiment_1/rl_ego_normal-13')
     parser.add_argument('--test_model_ego', type=str, default='Ego_27776.pt')
     parser.add_argument('--test_model_encoder', type=str, default='Encoder_27776.pt')
 
@@ -44,6 +44,8 @@ def main():
     parser.add_argument('--social_meta', type=bool, default=True)
     parser.add_argument('--social_idm', type=bool, default=False)                            # for social agent
     ### Batch evaluation under different evaluation distributions using importance sampling
+    parser.add_argument('--eval_type', default=None)
+    parser.add_argument('--naturalistic_dist', default=None)
     parser.add_argument('--mean_eval', default=None)
     parser.add_argument('--std_eval', default=None)
     ################
@@ -107,14 +109,10 @@ def main():
         print(f'Social Agent     : {load_path_social}')
     print('-----------------------')
 
-    test_args.mean_eval = 1.5
-    test_args.std_eval = 0.5
-
-    # print(f'Naturalistic Distribution    : N({test_args.mean_naturalistic}, {test_args.std_naturalistic}) ')
-    if test_args.mean_eval is not None and test_args.std_eval is not None:
+    if test_args.eval_type == "IS":
         print(f'Evaluation Distribution      : N({test_args.mean_eval}, {test_args.std_eval}) ')
-    else:
-        print(f'Evaluation Distribution      : Naturalistic Distribution ')
+    elif test_args.eval_type == "naturalistic":
+        print(f'Evaluation Distribution      : Naturalistic Distribution  {test_args.naturalistic_dist}')
     print('-----------------------')
 
     eval_dir = os.path.join(test_args.model_dir, 'eval')
@@ -136,7 +134,7 @@ def main():
         config.env_config.env.env_name = 'TIntersectionRobustnessSocial-v0'
     envs = make_vec_envs(config.env_config.env.env_name, config.env_config.env.seed, num_env,
                          config.env_config.reward.gamma, None, device, allow_early_resets=True, config=config,
-                         mean=test_args.mean_eval, std=test_args.std_eval)
+                         mean=test_args.mean_eval, std=test_args.std_eval, nat=test_args.naturalistic_dist)
     envs.nenv = num_env
 
     #################################################
@@ -288,10 +286,10 @@ def main():
                 print('-----------------------', file=f)
 
                 ###### 6.2. Evaluation distributions
-                if test_args.mean_eval is not None and test_args.std_eval is not None:
+                if test_args.eval_type == "IS":
                     print(f'Evaluation Distribution      : N({test_args.mean_eval}, {test_args.std_eval}) ', file=f)
-                else:
-                    print(f'Evaluation Distribution      : Naturalistic Distribution ', file=f)
+                elif test_args.eval_type == "naturalistic":
+                        print(f'Evaluation Distribution      : Naturalistic Distribution {test_args.naturalistic_dist}', file=f)
                 print('-----------------------', file=f)
 
                 ###### 6.3. Experimental results (Rates)
