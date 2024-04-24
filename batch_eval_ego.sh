@@ -35,8 +35,8 @@ eval_std=(
 ############ Ego policies to be evaluated ############
 normal_mean=(
 #   -0.5
-    0.5
-#    1.5
+#    0.5
+    1.5
 #    2.5
 )
 
