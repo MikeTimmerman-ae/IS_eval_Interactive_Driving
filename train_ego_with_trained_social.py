@@ -40,10 +40,12 @@ def main():
     parser.add_argument('--use_pretrained_encoder', default=True)
     parser.add_argument('--encoder', default="data/encoder_idm/checkpoints/49.pt")
     parser.add_argument('--use_idm', default=False)
-    ### Batch training under different normal distributions
-    parser.add_argument('--mean', default=None)
-    parser.add_argument('--std', default=None)
+    ### Training distribution settings
     parser.add_argument('--experiment', default=None)
+    parser.add_argument('--gmm', default=None)                      # If specified, use GMM to generate beta's
+    parser.add_argument('--mean', default=None)                     # If specified, use normal dist to generate beta's
+    parser.add_argument('--std', default=None)
+    parser.add_argument('--naturalistic_dist', default=None)        # If specified, reweigh ego rewards
     ################
     test_args = parser.parse_args()
 
@@ -61,13 +63,17 @@ def main():
     social_config.ppo.num_steps = config.ppo.num_steps
     social_config.training.cuda = config.training.cuda
 
-    # Set-up experiment 1
+    # Set-up experiment
     if test_args.mean is not None and test_args.std is not None:
-        config.training.mean = test_args.mean
-        config.training.std = test_args.std
         save_path = f'data/{test_args.experiment}/rl_ego_{test_args.mean.replace(".","")}_{test_args.std.replace(".","")}'
         config.training.output_dir = save_path
         print(f"Writing output to {config.training.output_dir}")
+    elif test_args.gmm is not None:
+        # Train ego policy on gaussian mixture model
+        save_path = f'data/{test_args.experiment}/rl_ego_{test_args.gmm}'
+        config.training.output_dir = save_path
+        print(f"Writing output to {config.training.output_dir}")
+        test_args.gmm = {'k': 2, 'mean': [0.5, 1.2], 'sigmas': [0.5, 0.5], 'weights': [0.5, 0.5]}
     elif test_args.experiment is not None:
         save_path = f'data/{test_args.experiment}'
         config.training.output_dir = save_path
@@ -109,7 +115,7 @@ def main():
     human_num = config.env_config.car.max_veh_num
     envs = make_vec_envs(config.env_config.env.env_name, config.env_config.env.seed, config.training.num_processes,
                          config.env_config.reward.gamma, None, device, False, config=config,
-                         mean=config.training.mean, std=config.training.std)
+                         mean=test_args.mean, std=test_args.std, nat=test_args.naturalistic_dist, gmm=test_args.gmm)
 
     #################################################
     #### 1. Inference network (Ego agent)

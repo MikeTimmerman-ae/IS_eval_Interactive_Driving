@@ -1,4 +1,6 @@
 import random
+
+import numpy as np
 import torch
 import pyglet
 import math
@@ -49,15 +51,16 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         # Generate new set of beta's
         self.car_count = 0
         if self.mean is not None and self.std is not None:
+            # According to normal distribution
             self.episode_betas = np.random.normal(float(self.mean), float(self.std), self.car_limit)
+        elif self.gmm is not None:
+            # According to Gaussian Mixture Model
+            self.episode_betas = np.zeros((self.car_limit,))
+            for k in range(self.gmm['k']):
+                self.episode_betas += self.gmm['weights'][k] * np.random.normal(self.gmm['mean'][k], self.gmm['std'][k], self.car_limit)
         elif self.nat_dist is not None:
-            # Load data from JSON file
-            with open(f'beta_dist/{self.nat_dist}.json', 'r') as file:
-                data = json.load(file)
-            # Initialize KDE with bandwidth method 'scott'
-            kde = gaussian_kde(data['x'], bw_method='scott', weights=data['density'])
-            # Generate samples
-            self.episode_betas = kde.resample(size=self.car_limit)[0]
+            # According to Naturalistic distribution
+            self.episode_betas = self.kde.resample(size=self.car_limit)[0]
 
         super(TIntersectionRobustnessSocial, self)._reset()
         # self._cars[0].set_velocity(np.array([0.0, 0.0]))
@@ -70,16 +73,24 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
         self._drivers[0].safe_control = self.safe_control
         self.collision_vehicle_type = [0.0, None]
 
-    def configure(self, config, nenv=None, mean=None, std=None, nat=None):
+    def configure(self, config, nenv=None, mean=None, std=None, nat=None, gmm=None):
         super(TIntersectionRobustnessSocial, self).configure(config)
         self.nenv = nenv
         self.mean = mean
         self.std = std
         self.nat_dist = nat
+        self.gmm = gmm
 
         if self.mean is not None and self.std is not None:
             print(f"Social behavior normal distribution with mean {self.mean} and standard deviation {self.std}.")
-        elif self.nat_dist is not None:
+        elif self.gmm is not None:
+            print(f"Social behaviour with Gaussian Mixture Model.")
+        if self.nat_dist is not None:
+            # Load data from JSON file
+            with open(f'beta_dist/{self.nat_dist}.json', 'r') as file:
+                data = json.load(file)
+            # Initialize KDE with bandwidth method 'scott'
+            self.kde = gaussian_kde(data['x'], bw_method='scott', weights=data['density'])
             print(f"Social behavior using naturalistic distribution {self.nat_dist}.")
 
         self.safe_control = config.car.safe_control
@@ -494,6 +505,16 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
                 # add reward for larger speeds & a small constant penalty to discourage the ego car from staying in place
                 reward = reward - 0.0 + 0.05 * np.linalg.norm([v_x, v_y]) / 3
                 # reward = reward + 0.01 * np.linalg.norm([v_x, v_y]) / 3
+            if self.nat_dist is not None:
+                # Reweigh ego's reward in case naturalistic distribution is specified
+                eval_likelihood = 0
+                for k in range(self.gmm['k']):
+                    prob_k = multivariate_normal(self.gmm['mean'][k] * np.ones((self.max_veh_num, )),
+                                                 self.gmm['std'][k]**2 * np.eye(self.max_veh_num)).pdf(self.objective[:, 1])
+                    eval_likelihood += self.gmm['weights'][k] * prob_k
+                ratio = self.kde.pdf(self.objective[:, 1]) / eval_likelihood
+                print("Likelihood Ratio: ", ratio)
+                reward = reward * ratio
 
             # print('reward:', reward)
             return reward

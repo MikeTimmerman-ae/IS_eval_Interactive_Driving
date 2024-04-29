@@ -32,7 +32,7 @@ except ImportError:
     pass
 
 
-def make_env(env_id, seed, rank, log_dir, allow_early_resets, config=None, envNum=1, mean=None, std=None, nat=None):
+def make_env(env_id, seed, rank, log_dir, allow_early_resets, config=None, envNum=1, mean=None, std=None, nat=None, gmm=None):
     def _thunk():
         if env_id.startswith("dm"):
             _, domain, task = env_id.split('.')
@@ -45,7 +45,7 @@ def make_env(env_id, seed, rank, log_dir, allow_early_resets, config=None, envNu
         if is_atari:
             env = make_atari(env_id)
 
-        env.unwrapped.configure(config.env_config, envNum, mean, std, nat)
+        env.unwrapped.configure(config.env_config, envNum, mean, std, nat, gmm)
 
         envSeed = seed + rank if seed is not None else None
 
@@ -101,11 +101,12 @@ def make_vec_envs(env_name,
                   wrap_pytorch=True,
                   mean=None,
                   std=None,
-                  nat=None):
+                  nat=None,
+                  gmm=None):
 
     envs = [
         make_env(env_name, seed, i, log_dir, allow_early_resets, config=config,
-                 envNum=num_processes, mean=mean, std=std, nat=nat)
+                 envNum=num_processes, mean=mean, std=std, nat=nat, gmm=gmm)
         for i in range(num_processes)
     ]
 

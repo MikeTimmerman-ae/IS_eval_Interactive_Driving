@@ -44,9 +44,9 @@ def main():
     parser.add_argument('--social_meta', type=bool, default=True)
     parser.add_argument('--social_idm', type=bool, default=False)                            # for social agent
     ### Batch evaluation under different evaluation distributions using importance sampling
-    parser.add_argument('--eval_type', default=None)
-    parser.add_argument('--naturalistic_dist', default=None)
-    parser.add_argument('--mean_eval', default=None)
+    parser.add_argument('--eval_type', default=None)            # Specify which type of evaluation
+    parser.add_argument('--naturalistic_dist', default=None)    # Specify in case of eval under naturalistic dist.
+    parser.add_argument('--mean_eval', default=None)            # Specify in case of eval under IS distribution
     parser.add_argument('--std_eval', default=None)
     ################
     test_args = parser.parse_args()
