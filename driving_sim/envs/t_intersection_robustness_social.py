@@ -512,7 +512,6 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
                     prob_k = np.prod(multivariate_normal(self.gmm['mean'][k], self.gmm['std'][k]).pdf(self.objective[:, 1]))
                     eval_likelihood += self.gmm['weights'][k] * prob_k
                 ratio = np.prod(self.kde.pdf(self.objective[:, 1])) / eval_likelihood
-                print("Likelihood Ratio: ", ratio)
                 reward = reward * ratio
 
             # print('reward:', reward)
