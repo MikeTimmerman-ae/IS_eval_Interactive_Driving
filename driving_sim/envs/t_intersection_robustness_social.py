@@ -509,10 +509,9 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
                 # Reweigh ego's reward in case naturalistic distribution is specified
                 eval_likelihood = 0
                 for k in range(self.gmm['k']):
-                    prob_k = multivariate_normal(self.gmm['mean'][k] * np.ones((self.max_veh_num, )),
-                                                 self.gmm['std'][k]**2 * np.eye(self.max_veh_num)).pdf(self.objective[:, 1])
+                    prob_k = np.prod(multivariate_normal(self.gmm['mean'][k], self.gmm['std'][k]).pdf(self.objective[:, 1]))
                     eval_likelihood += self.gmm['weights'][k] * prob_k
-                ratio = self.kde.pdf(self.objective[:, 1]) / eval_likelihood
+                ratio = np.prod(self.kde.pdf(self.objective[:, 1])) / eval_likelihood
                 print("Likelihood Ratio: ", ratio)
                 reward = reward * ratio
 
