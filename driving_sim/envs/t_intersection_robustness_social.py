@@ -514,7 +514,6 @@ class TIntersectionRobustnessSocial(TIntersectionPredictFront):
                 ratio = np.prod(self.kde.pdf(self.objective[:, 1])) / eval_likelihood
                 reward = reward * ratio
 
-            print('reward:', reward)
             return reward
 
         else:
