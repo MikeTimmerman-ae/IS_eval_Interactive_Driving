@@ -73,7 +73,8 @@ def main():
         save_path = f'data/{test_args.experiment}/rl_ego_{test_args.gmm}'
         config.training.output_dir = save_path
         print(f"Writing output to {config.training.output_dir}")
-        test_args.gmm = {'k': 2, 'mean': [0.5, 1.2], 'std': [0.5, 0.5], 'weights': [0.5, 0.5]}
+        # test_args.gmm = {'k': 2, 'mean': [0.5, 1.2], 'std': [0.5, 0.5], 'weights': [0.5, 0.5]}
+        test_args.gmm = {'k': 3, 'mean': [0.5, 1.2, 2.14], 'std': [0.5, 0.5, 0.5], 'weights': [1/3, 1/3, 1/3]}
     elif test_args.experiment is not None:
         save_path = f'data/{test_args.experiment}'
         config.training.output_dir = save_path
