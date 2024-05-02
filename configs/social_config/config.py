@@ -15,7 +15,7 @@ class SocialConfig(object):
 
     # ppo config
     ppo = BaseConfig()
-    ppo.num_mini_batch = 1  # number of batches for ppo
+    ppo.num_mini_batch = 2  # number of batches for ppo
     ppo.num_steps = 30  # number of forward steps
     ppo.recurrent_policy = True  # use a recurrent policy
     ppo.epoch = 5  # number of ppo epochs
@@ -40,7 +40,7 @@ class SocialConfig(object):
     training.cuda_deterministic = False  # sets flags for determinism when using CUDA (potentially slow!)
     training.no_cuda = False  # disables CUDA training
     training.cuda = not training.no_cuda and torch.cuda.is_available()
-    training.num_processes = 1  # how many training CPU processes to use
+    training.num_processes = 12  # how many training CPU processes to use
     training.output_dir = 'data/new_rl'  # the saving directory for train.py
     training.resume = False  # resume training from an existing checkpoint or not
     training.load_path = None  # if resume = True, load from the following checkpoint
