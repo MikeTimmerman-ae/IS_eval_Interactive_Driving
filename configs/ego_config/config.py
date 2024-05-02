@@ -42,7 +42,7 @@ class Config(object):
     training.cuda_deterministic = False  # sets flags for determinism when using CUDA (potentially slow!)
     training.no_cuda = False  # disables CUDA training
     training.cuda = not training.no_cuda and torch.cuda.is_available()
-    training.num_processes = 12  # how many training CPU processes to use
+    training.num_processes = 1  # how many training CPU processes to use
     training.output_dir = 'data/new_rl'  # the saving directory for train.py
     training.resume = False  # resume training from an existing checkpoint or not
     training.load_path = None  # if resume = True, load from the following checkpoint
