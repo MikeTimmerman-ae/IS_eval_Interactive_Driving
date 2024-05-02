@@ -17,7 +17,7 @@ class Config(object):
 
     # ppo config
     ppo = BaseConfig()
-    ppo.num_mini_batch = 2  # number of batches for ppo
+    ppo.num_mini_batch = 1  # number of batches for ppo
     ppo.num_steps = 30  # number of forward steps
     ppo.recurrent_policy = True  # use a recurrent policy
     ppo.epoch = 5  # number of ppo epochs
